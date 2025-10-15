@@ -1,10 +1,10 @@
 import { SizableText } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 
-export default function Index() {
+export default function Settings() {
 	return (
 		<ScrollableScreen>
-			<SizableText>Home</SizableText>
+			<SizableText>Settings</SizableText>
 		</ScrollableScreen>
 	);
 }

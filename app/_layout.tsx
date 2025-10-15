@@ -1,24 +1,65 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Lexend_100Thin } from "@expo-google-fonts/lexend/100Thin";
+import { Lexend_200ExtraLight } from "@expo-google-fonts/lexend/200ExtraLight";
+import { Lexend_300Light } from "@expo-google-fonts/lexend/300Light";
+import { Lexend_400Regular } from "@expo-google-fonts/lexend/400Regular";
+import { Lexend_500Medium } from "@expo-google-fonts/lexend/500Medium";
+import { Lexend_600SemiBold } from "@expo-google-fonts/lexend/600SemiBold";
+import { Lexend_700Bold } from "@expo-google-fonts/lexend/700Bold";
+import { Lexend_800ExtraBold } from "@expo-google-fonts/lexend/800ExtraBold";
+import { Lexend_900Black } from "@expo-google-fonts/lexend/900Black";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { Providers } from "@/providers";
+import { useIsSubscribed } from "@/providers/RevenueCat";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+SplashScreen.setOptions({
+	duration: 1000,
+	fade: true,
+});
 
-export const unstable_settings = {
-  anchor: '(tabs)',
+SplashScreen.preventAutoHideAsync();
+
+const AppStack = () => {
+	const isSubscribed = useIsSubscribed();
+
+	return (
+		<Stack
+			initialRouteName={isSubscribed ? "home" : "index"}
+			screenOptions={{ headerShown: false }}
+		>
+			<Stack.Protected guard={!isSubscribed}>
+				<Stack.Screen name="index" />
+				<Stack.Screen name="onboarding" />
+			</Stack.Protected>
+			<Stack.Protected guard={isSubscribed}>
+				<Stack.Screen name="(tabs)" />
+			</Stack.Protected>
+		</Stack>
+	);
 };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+	const [loaded] = useFonts({
+		Thin: Lexend_100Thin,
+		ExtraLight: Lexend_200ExtraLight,
+		Light: Lexend_300Light,
+		Regular: Lexend_400Regular,
+		Medium: Lexend_500Medium,
+		SemiBold: Lexend_600SemiBold,
+		Bold: Lexend_700Bold,
+		ExtraBold: Lexend_800ExtraBold,
+		Black: Lexend_900Black,
+	});
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+	if (!loaded) {
+		// maybe display error screen
+		return null;
+	}
+
+	return (
+		<Providers>
+			<AppStack />
+		</Providers>
+	);
 }
