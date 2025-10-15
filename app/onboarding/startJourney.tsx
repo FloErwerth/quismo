@@ -2,15 +2,16 @@ import { Redirect, router } from "expo-router";
 import { SizableText, View } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { STORAGE_KEYS, useStoreNumber, useStoreString } from "@/storage";
+
+import { useStore } from "@/storage";
 
 export default function Method() {
-	const [averageCigarettesSmokedPerDay] = useStoreNumber(
-		STORAGE_KEYS.AVERAGE_CIGARETTES_SMOKED_PER_DAY,
+	const averageCigarettesSmokedPerDay = useStore(
+		(state) => state.averageCigarettesSmokedPerDay,
 	);
-	const [boxPrice] = useStoreString(STORAGE_KEYS.BOX_PRICE);
-	const [cigarettesPerBox] = useStoreNumber(STORAGE_KEYS.CIGARETTES_PER_BOX);
-	const [timeToHitGoal] = useStoreString(STORAGE_KEYS.TIME_TO_HIT_GOAL);
+	const cigarettesPerBox = useStore((state) => state.cigarettesPerBox);
+	const boxPrice = useStore((state) => state.boxPrice);
+	const timeToHitGoal = useStore((state) => state.timeToHitGoal);
 
 	if (cigarettesPerBox === undefined) {
 		return <Redirect href="/onboarding/numberOfCigarettesPerBoxPage" />;

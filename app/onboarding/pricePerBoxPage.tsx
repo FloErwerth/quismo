@@ -9,11 +9,14 @@ import {
 } from "@/config/currencies";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { STORAGE_KEYS, useStoreString } from "@/storage";
+import { useStore } from "@/storage";
 
 export default function SmokingPage3() {
-	const [boxPrice, setBoxPrice] = useStoreString(STORAGE_KEYS.BOX_PRICE);
-	const [currency, setCurrency] = useStoreString(STORAGE_KEYS.CURRENCY);
+	const boxPrice = useStore((state) => state.boxPrice);
+	const updateBoxPrice = useStore((state) => state.updateBoxPrice);
+	const currency = useStore((state) => state.currency);
+	const updateCurrency = useStore((state) => state.updateCurrency);
+
 	return (
 		<ScrollableScreen flex={1} keyboardShouldPersistTaps="never">
 			<OnboardingPage
@@ -24,7 +27,7 @@ export default function SmokingPage3() {
 				<XStack gap="$2">
 					<View gap="$2" flex={1}>
 						<OnboardingInput
-							onChangeText={setBoxPrice}
+							onChangeText={updateBoxPrice}
 							value={boxPrice?.toString()}
 							label="Betrag"
 							keyboardType="decimal-pad"
@@ -38,7 +41,7 @@ export default function SmokingPage3() {
 							placeholder="Währung wählen"
 							selectedItem={currency as Currency}
 							labelMap={currencies}
-							onSelectionChange={setCurrency}
+							onSelectionChange={updateCurrency}
 							items={currenciesArray}
 						/>
 					</View>

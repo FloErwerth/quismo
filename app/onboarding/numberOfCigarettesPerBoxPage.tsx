@@ -2,11 +2,12 @@ import { router } from "expo-router";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { STORAGE_KEYS, useStoreNumber } from "@/storage";
+import { useStore } from "@/storage";
 
 export default function SmokingPage2() {
-	const [cigarettesPerBox, setCigarettesPerBox] = useStoreNumber(
-		STORAGE_KEYS.CIGARETTES_PER_BOX,
+	const cigarettesPerBox = useStore((state) => state.cigarettesPerBox);
+	const updateCigarettesPerBox = useStore(
+		(state) => state.updateCigarettesPerBox,
 	);
 
 	return (
@@ -20,7 +21,7 @@ export default function SmokingPage2() {
 					label="Anzahl Zigaretten pro Schachtel"
 					subLabel="Das hilft uns dabei deine finanziellen Einsparungen zu berechnen"
 					value={cigarettesPerBox?.toString()}
-					onChangeText={(text: string) => setCigarettesPerBox(text)}
+					onChangeText={(text: string) => updateCigarettesPerBox(Number(text))}
 					maxLength={3}
 					keyboardType="number-pad"
 				/>

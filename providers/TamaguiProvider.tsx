@@ -104,7 +104,9 @@ const config = createTamagui({
 type OurConfig = typeof config;
 
 declare module "tamagui" {
-	interface TamaguiCustomConfig extends OurConfig {}
+	interface TamaguiCustomConfig extends OurConfig {
+		unusedTokens: never[];
+	}
 }
 
 export const TamaguiProvider = ({ children }: PropsWithChildren) => (

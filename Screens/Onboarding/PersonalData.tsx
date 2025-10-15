@@ -3,10 +3,11 @@ import { View } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { STORAGE_KEYS, useStoreString } from "@/storage";
+import { useStore } from "@/storage";
 
 export const PersonalData = () => {
-	const [name, setName] = useStoreString(STORAGE_KEYS.NAME);
+	const updateName = useStore((state) => state.updateName);
+	const name = useStore((state) => state.name);
 
 	const navigateToNumberOfCigarettesPerDayPage = () => {
 		if (!name) {
@@ -27,7 +28,7 @@ export const PersonalData = () => {
 						label="Name"
 						subLabel="Wir verwenden diese Information, um die App persönlicher zu gestalten. Alle gesammelten Informationen werden nicht an Dritte weitergegeben."
 						value={name}
-						onChangeText={setName}
+						onChangeText={updateName}
 					/>
 				</OnboardingPage>
 			</View>

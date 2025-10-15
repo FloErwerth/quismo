@@ -1,34 +1,43 @@
-import { useMMKVNumber, useMMKVString } from "react-native-mmkv";
+import { create } from "zustand";
 
-export const STORAGE_KEYS = {
-	NAME: "name",
-	CIGARETTES_PER_BOX: "cigarettesPerBox",
-	AVERAGE_CIGARETTES_SMOKED_PER_DAY: "averageCigarettesSmokedPerDay",
-	BOX_PRICE: "boxPrice",
-	CURRENCY: "currency",
-} as const;
-
-type StorageKeys = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
-
-export const useStoreString = (key: StorageKeys) => {
-	return useMMKVString(key);
+type StoreValues = {
+	timeToHitGoal: string | undefined;
+	cigarettesPerBox: number | undefined;
+	boxPrice: string | undefined;
+	averageCigarettesSmokedPerDay: number | undefined;
+	name: string | undefined;
+	currency: string | undefined;
+	savedMoney: number | undefined;
 };
 
-export const useStoreNumber = (key: StorageKeys) => {
-	const [value, setValue] = useMMKVNumber(key);
-
-	return [
-		value,
-		(value: string | number | undefined) => {
-			if (value === undefined) {
-				setValue(undefined);
-				return;
-			}
-			if (typeof value === "string") {
-				setValue(Number(value));
-				return;
-			}
-			setValue(value);
-		},
-	] as const;
+type StoreActions = {
+	updateTimeToHitGoal: (timeToHitGoal: string) => void;
+	updateCigarettesPerBox: (cigarettesPerBox: number) => void;
+	updateBoxPrice: (boxPrice: string) => void;
+	updateAverageCigarettesSmokedPerDay: (
+		averageCigarettesSmokedPerDay: number,
+	) => void;
+	updateName: (name: string) => void;
+	updateCurrency: (currency: string) => void;
+	updateSavedMoney: (savedMoney: number) => void;
 };
+
+export const useStore = create<StoreValues & StoreActions>((set) => ({
+	timeToHitGoal: undefined,
+	cigarettesPerBox: undefined,
+	boxPrice: undefined,
+	averageCigarettesSmokedPerDay: undefined,
+	name: undefined,
+	currency: undefined,
+	savedMoney: undefined,
+	updateTimeToHitGoal: (timeToHitGoal: string) => set({ timeToHitGoal }),
+	updateCigarettesPerBox: (cigarettesPerBox: number) =>
+		set({ cigarettesPerBox }),
+	updateBoxPrice: (boxPrice: string) => set({ boxPrice }),
+	updateAverageCigarettesSmokedPerDay: (
+		averageCigarettesSmokedPerDay: number,
+	) => set({ averageCigarettesSmokedPerDay }),
+	updateName: (name: string) => set({ name }),
+	updateCurrency: (currency: string) => set({ currency }),
+	updateSavedMoney: (savedMoney: number) => set({ savedMoney }),
+}));

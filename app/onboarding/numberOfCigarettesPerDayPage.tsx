@@ -3,7 +3,7 @@ import { SizableText, View } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { STORAGE_KEYS, useStoreNumber } from "@/storage";
+import { useStore } from "@/storage";
 
 const getAddictionSeverity = (cigarettesPerDay?: number) => {
 	if (cigarettesPerDay === undefined) {
@@ -27,8 +27,12 @@ const getAddictionSeverity = (cigarettesPerDay?: number) => {
 };
 
 export default function NumberOfCigarettesPerDayPage() {
-	const [averageCigarettesSmokedPerDay, setAverageCigarettesSmokedPerDay] =
-		useStoreNumber(STORAGE_KEYS.AVERAGE_CIGARETTES_SMOKED_PER_DAY);
+	const averageCigarettesSmokedPerDay = useStore(
+		(state) => state.averageCigarettesSmokedPerDay,
+	);
+	const updateAverageCigarettesSmokedPerDay = useStore(
+		(state) => state.updateAverageCigarettesSmokedPerDay,
+	);
 
 	return (
 		<ScrollableScreen flex={1}>
@@ -44,7 +48,7 @@ export default function NumberOfCigarettesPerDayPage() {
 					maxLength={3}
 					keyboardType="number-pad"
 					onChangeText={(text: string) => {
-						setAverageCigarettesSmokedPerDay(text);
+						updateAverageCigarettesSmokedPerDay(Number(text));
 					}}
 				/>
 				{averageCigarettesSmokedPerDay !== undefined && (

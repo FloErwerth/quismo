@@ -3,14 +3,12 @@ import { RadioGroup, SizableText, View, XStack } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
 import { SelectableCard } from "@/Screens/Onboarding/SelectableCard";
-import { useOnboardingStore } from "@/Screens/Onboarding/store";
-import {
-	ONBOARDING_TARGET_DATES,
-	type OnboardingStore,
-} from "@/Screens/Onboarding/types";
+import { ONBOARDING_TARGET_DATES } from "@/Screens/Onboarding/types";
+import { useStore } from "@/storage";
 
 export default function Time() {
-	const [{ timeToHitGoal }, setOnboardingStore] = useOnboardingStore();
+	const updateTimeToHitGoal = useStore((state) => state.updateTimeToHitGoal);
+	const timeToHitGoal = useStore((state) => state.timeToHitGoal);
 
 	const navigateToNextPage = () => {
 		router.push("/onboarding/startJourney");
@@ -30,10 +28,7 @@ export default function Time() {
 					<SelectableCard
 						selected={timeToHitGoal === ONBOARDING_TARGET_DATES.FOURTEEN_DAYS}
 						onPress={() =>
-							setOnboardingStore((store: OnboardingStore) => ({
-								...store,
-								timeToHitGoal: ONBOARDING_TARGET_DATES.FOURTEEN_DAYS,
-							}))
+							updateTimeToHitGoal(ONBOARDING_TARGET_DATES.FOURTEEN_DAYS)
 						}
 					>
 						<XStack flex={1} gap="$2">
@@ -57,10 +52,7 @@ export default function Time() {
 					<SelectableCard
 						selected={timeToHitGoal === ONBOARDING_TARGET_DATES.THIRTY_DAYS}
 						onPress={() =>
-							setOnboardingStore((store: OnboardingStore) => ({
-								...store,
-								timeToHitGoal: ONBOARDING_TARGET_DATES.THIRTY_DAYS,
-							}))
+							updateTimeToHitGoal(ONBOARDING_TARGET_DATES.THIRTY_DAYS)
 						}
 					>
 						<XStack flex={1} gap="$2">
@@ -82,10 +74,7 @@ export default function Time() {
 					<SelectableCard
 						selected={timeToHitGoal === ONBOARDING_TARGET_DATES.THREE_MONTHS}
 						onPress={() =>
-							setOnboardingStore((store: OnboardingStore) => ({
-								...store,
-								timeToHitGoal: ONBOARDING_TARGET_DATES.THREE_MONTHS,
-							}))
+							updateTimeToHitGoal(ONBOARDING_TARGET_DATES.THREE_MONTHS)
 						}
 					>
 						<XStack flex={1} gap="$2">
@@ -123,10 +112,7 @@ export default function Time() {
 					<SelectableCard
 						selected={timeToHitGoal === ONBOARDING_TARGET_DATES.SIX_MONTHS}
 						onPress={() =>
-							setOnboardingStore((store: OnboardingStore) => ({
-								...store,
-								timeToHitGoal: ONBOARDING_TARGET_DATES.SIX_MONTHS,
-							}))
+							updateTimeToHitGoal(ONBOARDING_TARGET_DATES.SIX_MONTHS)
 						}
 					>
 						<XStack flex={1} gap="$2">

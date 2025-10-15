@@ -1,12 +1,6 @@
-import type { LinearGradient } from "expo-linear-gradient";
-import type { ComponentProps, PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SizableText, View, type ViewProps, XStack } from "tamagui";
-
-const colors: ComponentProps<typeof LinearGradient>["colors"] = [
-	"#E2FCEF",
-	"#EBF2FE",
-];
 
 export type ScreenProps = PropsWithChildren &
 	ViewProps & {
