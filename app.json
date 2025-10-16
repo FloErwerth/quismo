@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "quismo",
+		"name": "QuiSmo",
 		"slug": "quismo",
 		"version": "0.0.1",
 		"orientation": "portrait",
@@ -8,11 +8,7 @@
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": true,
 		"ios": {
-			"icon": {
-				"light": "./assets/images/ios-light.png",
-				"dark": "./assets/images/ios-dark.png",
-				"tinted": "./assets/images/ios-tinted.png"
-			},
+			"icon": "./assets/images/ios-light.png",
 			"bundleIdentifier": "de.florian.erwerth.quismo",
 			"supportsTablet": false,
 			"infoPlist": {
@@ -35,7 +31,7 @@
 			[
 				"expo-splash-screen",
 				{
-					"backgroundColor": "#232323",
+					"backgroundColor": "#ffffff",
 					"image": "./assets/images/splash-icon-light.png",
 					"dark": {
 						"image": "./assets/images/splash-icon-dark.png",
