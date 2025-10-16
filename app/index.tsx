@@ -2,15 +2,13 @@ import { Euro, Leaf, ShieldCheck, ShieldPlus } from "@tamagui/lucide-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Trans, useTranslation } from "react-i18next";
-import { SizableText, useTheme, View, XStack } from "tamagui";
+import { SizableText, View, XStack } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { Button } from "@/components/tamagui/Button";
 import "@/translation/i18next";
 
 export default function Index() {
 	const { t } = useTranslation();
-	const theme = useTheme();
-	console.log(theme.blue11Light.val);
 	return (
 		<ScrollableScreen flex={1}>
 			<View paddingTop="$6">

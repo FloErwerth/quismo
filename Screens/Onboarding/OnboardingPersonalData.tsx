@@ -18,12 +18,21 @@ export const OnboardingPersonalData = () => {
 		router.push("/onboarding/numberOfCigarettesPerDayPage");
 	};
 
+	const handleNameChange = (text: string) => {
+		const trimmedText = text.trim();
+		if (trimmedText.length === 0) {
+			updateName("");
+			return;
+		}
+		updateName(text);
+	};
+
 	return (
 		<ScrollableScreen flex={1}>
 			<View gap="$6" flex={1}>
 				<OnboardingPage
 					currentPage={1}
-					nextButtonDisabled={!name}
+					nextButtonDisabled={name === undefined || name.length === 0}
 					onNext={navigateToNumberOfCigarettesPerDayPage}
 					title={t("onboarding.personalData.title")}
 				>
@@ -31,7 +40,7 @@ export const OnboardingPersonalData = () => {
 						label={t("common.name")}
 						subLabel={t("onboarding.personalData.nameExplanation")}
 						value={name}
-						onChangeText={updateName}
+						onChangeText={handleNameChange}
 					/>
 				</OnboardingPage>
 			</View>

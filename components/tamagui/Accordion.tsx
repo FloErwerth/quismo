@@ -14,13 +14,7 @@ type AccordionItemProps = {
 	itemTitle: string;
 } & PropsWithChildren;
 
-const AccordionItem = ({
-	itemTitle,
-	children,
-}: {
-	itemTitle: string;
-	children: React.ReactNode;
-}) => {
+const AccordionItem = ({ itemTitle, children }: AccordionItemProps) => {
 	const id = useId();
 	return (
 		<AccordionTamagui.Item value={id}>

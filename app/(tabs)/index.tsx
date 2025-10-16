@@ -1,13 +1,5 @@
-import { useTranslation } from "react-i18next";
-import { SizableText } from "tamagui";
-import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
+import { HomeScreen } from "@/Screens/Home/HomeScreen";
 
 export default function Index() {
-	const { t } = useTranslation();
-
-	return (
-		<ScrollableScreen>
-			<SizableText>{t("tabs.home")}</SizableText>
-		</ScrollableScreen>
-	);
+	return <HomeScreen />;
 }

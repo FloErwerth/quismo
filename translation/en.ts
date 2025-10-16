@@ -88,8 +88,15 @@ export default {
 			reasonToQuitLabel:
 				"Therefore: Quitting smoking is not only very healthy, but also financially very quickly.",
 			startJourneyLabel:
-				"If you are ready, start your journey to a smoke-free life now.",
+				"If you are ready, start your journey to a smoke-free life now",
 			startJourneyButton: "I want to quit smoking",
+		},
+	},
+	home: {
+		greeting: {
+			morning: "Good morning",
+			afternoon: "Good afternoon",
+			evening: "Good evening",
 		},
 	},
 } satisfies Translation<typeof de>;

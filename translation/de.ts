@@ -82,8 +82,15 @@ export default {
 			reasonToQuitLabel:
 				"Daher: Rauchen aufhören ist nicht nur sehr gesund, sondern rechnet sich auch finanziell sehr schnell",
 			startJourneyLabel:
-				"Wenn Du bereit bist, dann starte jetzt Deinen Weg zum rauchfreien Leben.",
+				"Wenn Du bereit bist, dann starte jetzt Deinen Weg in ein rauchfreies Leben",
 			startJourneyButton: "Ich möchte mit dem Rauchen aufhören",
+		},
+	},
+	home: {
+		greeting: {
+			morning: "Guten Morgen",
+			afternoon: "Guten Nachmittag",
+			evening: "Guten Abend",
 		},
 	},
 } as const;

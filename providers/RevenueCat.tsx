@@ -10,9 +10,11 @@ import {
 import { Platform } from "react-native";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 
-const RevenueCatContext = createContext({ isSubscribed: false });
+export const RevenueCatContext = createContext<
+	{ isSubscribed: boolean; checkSubscription: () => Promise<void> } | undefined
+>(undefined);
 
-const useSubscriptionContext = () => {
+export const useSubscriptionContext = () => {
 	const context = useContext(RevenueCatContext);
 	if (!context) {
 		throw new Error(
@@ -37,6 +39,11 @@ const RevenueCatSubscriptionProvider = ({
 		const customerInfo = await Purchases.getCustomerInfo();
 		return Object.values(customerInfo.entitlements.active).length > 0;
 	}, []);
+
+	const doCheckSubscription = useCallback(async () => {
+		const isSubscribed = await getIsSubscribedInRevenueCat();
+		setIsSubscribed(isSubscribed);
+	}, [getIsSubscribedInRevenueCat]);
 
 	useEffect(() => {
 		if (!isInitialized) {
@@ -63,7 +70,9 @@ const RevenueCatSubscriptionProvider = ({
 	}, [getIsSubscribedInRevenueCat, isInitialized]);
 
 	return (
-		<RevenueCatContext.Provider value={{ isSubscribed }}>
+		<RevenueCatContext.Provider
+			value={{ isSubscribed, checkSubscription: doCheckSubscription }}
+		>
 			{children}
 		</RevenueCatContext.Provider>
 	);

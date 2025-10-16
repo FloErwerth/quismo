@@ -2,10 +2,22 @@ import { router } from "expo-router";
 import type { ParseKeys } from "i18next";
 import { useTranslation } from "react-i18next";
 import { SizableText, View } from "tamagui";
+import { z } from "zod";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
 import { useStore } from "@/storage";
+
+const cigarettesPerDaySchema = z
+	.number()
+	.min(0)
+	.max(100)
+	.refine((number) => {
+		if (number === 0) {
+			return undefined;
+		}
+		return number;
+	});
 
 const getAddictionSeverity = (
 	t: (key: ParseKeys) => string,
@@ -44,7 +56,10 @@ export const OnboardingCigarettesPerDayPage = () => {
 		<ScrollableScreen flex={1}>
 			<OnboardingPage
 				currentPage={2}
-				nextButtonDisabled={averageCigarettesSmokedPerDay === undefined}
+				nextButtonDisabled={
+					!cigarettesPerDaySchema.safeParse(averageCigarettesSmokedPerDay)
+						.success
+				}
 				onNext={() => router.push("/onboarding/numberOfCigarettesPerBoxPage")}
 				title={t("onboarding.numberPerDay.title")}
 			>
@@ -55,7 +70,12 @@ export const OnboardingCigarettesPerDayPage = () => {
 					maxLength={3}
 					keyboardType="number-pad"
 					onChangeText={(text: string) => {
-						updateAverageCigarettesSmokedPerDay(Number(text));
+						const result = cigarettesPerDaySchema.safeParse(Number(text));
+						if (!result.success) {
+							updateAverageCigarettesSmokedPerDay(undefined);
+							return;
+						}
+						updateAverageCigarettesSmokedPerDay(result.data);
 					}}
 				/>
 				{averageCigarettesSmokedPerDay !== undefined && (

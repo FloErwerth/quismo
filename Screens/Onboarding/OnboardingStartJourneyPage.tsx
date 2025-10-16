@@ -32,8 +32,7 @@ export const OnboardingStartJourneyPage = () => {
 	}
 
 	const todayDailyCost =
-		(averageCigarettesSmokedPerDay / cigarettesPerBox) *
-		Number(boxPrice.replace(",", "."));
+		(averageCigarettesSmokedPerDay / cigarettesPerBox) * boxPrice;
 
 	const yearlyCost = todayDailyCost * 365;
 
