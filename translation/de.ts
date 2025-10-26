@@ -4,6 +4,26 @@ export default {
 		previous: "Zurück",
 		name: "Name",
 		terms: "Nutzungsbedingungen",
+		phases: {
+			preperation: {
+				naming: {
+					short: "Phase 1",
+					long: "Phase 1: Vorbereitung",
+				},
+			},
+			smokeStop: {
+				naming: {
+					short: "Phase 2",
+					long: "Phase 2: Rauchstopp",
+				},
+			},
+			stabilization: {
+				naming: {
+					short: "Phase 3",
+					long: "Phase 3: Stabilisierung",
+				},
+			},
+		},
 	},
 	tabs: {
 		home: "Home",
@@ -25,27 +45,29 @@ export default {
 			nameExplanation:
 				"Wir verwenden diese Information, um die App persönlicher zu gestalten. Alle gesammelten Informationen werden nicht an Dritte weitergegeben.",
 		},
+		yearsSmoking: {
+			title: "Wie lange rauchst Du schon?",
+			label: "Jahre Rauchen",
+			explanation: "Das hilft uns dabei die Stärke deiner Sucht einzuschätzen",
+		},
 		method: {
 			title: "Das QuiSmo-System",
 			intro1:
 				"Bevor Du Informationen über dein Rauchverhalten eingibst möchten wir Dir erklären, wie das QuiSmo-System funktioniert",
 			intro2: "",
 			phase1: {
-				title: "Phase 1: Vorbereitung",
 				p1: "In dieser Phase kannst Du deinen Fokus auf die Motivation für den Rauchstopp richten.",
 				p2: "Dazu erhältst Du zum Beispiel Informationen über das Rauchen und festigst deine Motivation.",
 				durationLabel: "Dauer",
-				durationValue: "3 Tage oder bis Du starten möchtest",
+				durationValue: "bis Du dich bereit fühlst",
 			},
 			phase2: {
-				title: "Phase 2: Rauchstopp",
 				p1: "Die heiße und wichtigste Phase. Ab dann bist Du offiziell Nicht-Raucher!",
 				p2: "Mache einen täglichen Check-In für dich, schaue Dir Prozesse in deinem Körper an und erhalte tägliche Tipps.",
 				durationLabel: "Dauer",
 				durationValue: "14 Tage",
 			},
 			phase3: {
-				title: "Phase 3: Stabilisierung",
 				p1: "Die letzte Phase. Hier geht es um die Stabiliserung deiner neuen Gewohnheiten.",
 				p2: "Du bekommst weiterhin Informationen über Prozesse in deinem Körper. Sammle deine Erfolge und komme so spielerisch zum Ziel.",
 				durationLabel: "Dauer",
@@ -73,10 +95,14 @@ export default {
 				veryStrong: "Sehr Starke Sucht",
 			},
 		},
+		motivation: {
+			title: "Was motiviert Dich am meisten, mit dem Rauchen aufzuhören?",
+			description: "Wähle mindestens eine Motivation",
+			selectedCount: "{{count}}/{{total}} ausgewählt",
+		},
 		startJourney: {
-			title: "Gute Nachrichten!",
-			intro:
-				"Deine Entscheidung mit dem Rauchen aufzuhören werden Dir viel Geld sparen. Sieh Dir unsere Berechnungen an:",
+			title: "Bereit für dein rauchfreies Leben, {{name}}?",
+			intro: "Das sind deine Angaben:",
 			dailySavedLabel: "Jeden Tag gespartes Geld:",
 			sixYearsSavedLabel: "Gepartes Geld in 6 Jahren:",
 			reasonToQuitLabel:
@@ -86,11 +112,61 @@ export default {
 			startJourneyButton: "Ich möchte mit dem Rauchen aufhören",
 		},
 	},
+	phases: {
+		preperation: {
+			questions: {
+				confirm: "Auswahl bestätigen ({{count}})",
+			},
+			motivation: {
+				categories: {
+					health: "Gesundheit",
+					finance: "Finanzen",
+					family: "Familie",
+					freedom: "Freiheit",
+					pregnancy: "Schwangerschaft",
+					kids: "Kinder",
+					partner: "Partner",
+					sex: "Sex",
+					fitness: "Fitness",
+					smell: "Geruch",
+					taste: "Geschmack",
+					disease: "Krankheit",
+					experiences: "Erfahrungen",
+				},
+			},
+		},
+	},
 	home: {
 		greeting: {
 			morning: "Guten Morgen",
 			afternoon: "Guten Nachmittag",
 			evening: "Guten Abend",
+		},
+		phasesCard: {
+			preperation: {
+				title: "Vorbereitung auf den Rauchstopp",
+				questions: {
+					title: "Deine Vorbereitungsaufgaben",
+					motivation: {
+						title: "Motivation",
+						description: "Halte deine Motivationen fest",
+					},
+					analysis: {
+						title: "Analyse",
+						description: "Halte fest, warum du rauchen willst",
+					},
+					support: {
+						title: "Unterstützung",
+						description: "Lege deine Unterstützer fest",
+					},
+					alternative: {
+						title: "Alternativen",
+						description: "Lerne alternativen zum Rauchen kennen",
+					},
+				},
+				doneSteps:
+					"Du hast dich in {{steps}} von {{total}} Kategorien vorbereitet",
+			},
 		},
 	},
 } as const;

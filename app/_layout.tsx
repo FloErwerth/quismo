@@ -10,6 +10,7 @@ import { Lexend_900Black } from "@expo-google-fonts/lexend/900Black";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "react-native";
 import { GradientBackground } from "@/components/Screens/GradientBackground";
 import { Providers } from "@/providers";
 import { useIsSubscribed } from "@/providers/RevenueCat";
@@ -25,7 +26,7 @@ const AppStack = () => {
 	const isSubscribed = useIsSubscribed();
 	return (
 		<Stack
-			initialRouteName={isSubscribed ? "home" : "index"}
+			initialRouteName={isSubscribed ? "(tabs)" : "index"}
 			screenOptions={{
 				headerShown: false,
 			}}
@@ -37,6 +38,10 @@ const AppStack = () => {
 			<Stack.Protected guard={isSubscribed}>
 				<Stack.Screen name="(tabs)" />
 				<Stack.Screen name="preperationMotivation" />
+				<Stack.Screen
+					options={{ presentation: "pageSheet" }}
+					name="preperationHelp"
+				/>
 				<Stack.Screen name="preperationAnalysis" />
 				<Stack.Screen name="preperationSupport" />
 				<Stack.Screen name="preperationAlternatives" />
@@ -66,6 +71,7 @@ export default function RootLayout() {
 	return (
 		<Providers>
 			<GradientBackground>
+				<StatusBar hidden />
 				<AppStack />
 			</GradientBackground>
 		</Providers>

@@ -2,62 +2,59 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { Currency } from "@/config/currencies";
-
-export const PHASES = {
-	PREPERATION: "PREPERATION",
-	SMOKE_STOP: "SMOKE_STOP",
-	STABILIZATION: "STABILIZATION",
-} as const;
-
-export type Phase = (typeof PHASES)[keyof typeof PHASES];
+import { PHASES, type Phase } from "@/types";
 
 type StoreValues = {
-	cigarettesPerBox: number | undefined;
-	boxPrice: number | undefined;
-	averageCigarettesSmokedPerDay: number | undefined;
+	isTestUser: boolean;
+	cigarettesPerBox: string | undefined;
+	boxPrice: string | undefined;
+	averageCigarettesSmokedPerDay: string | undefined;
 	name: string | undefined;
 	currency: Currency | undefined;
-	savedMoney: number | undefined;
+	savedMoney: string | undefined;
+	yearsSmoking: string | undefined;
 	phase: Phase;
-	phase1Since: Date | undefined;
 };
 
 type StoreActions = {
-	updateCigarettesPerBox: (cigarettesPerBox: number | undefined) => void;
-	updateBoxPrice: (boxPrice: number | undefined) => void;
+	updateIsTestUser: (isTestUser: boolean) => void;
+	updateCigarettesPerBox: (cigarettesPerBox: string | undefined) => void;
+	updateBoxPrice: (boxPrice: string | undefined) => void;
 	updateAverageCigarettesSmokedPerDay: (
-		averageCigarettesSmokedPerDay: number | undefined,
+		averageCigarettesSmokedPerDay: string | undefined,
 	) => void;
 	updateName: (name: string) => void;
 	updateCurrency: (currency: Currency) => void;
-	updateSavedMoney: (savedMoney: number) => void;
+	updateSavedMoney: (savedMoney: string) => void;
 	updatePhase: (phase: Phase) => void;
-	updatePhase1Since: (phase1Since: Date | undefined) => void;
+	updateYearsSmoking: (yearsSmoking: string | undefined) => void;
 };
 
 export const useStore = create(
 	persist<StoreValues & StoreActions>(
 		(set) => ({
+			isTestUser: false,
 			cigarettesPerBox: undefined,
 			boxPrice: undefined,
 			averageCigarettesSmokedPerDay: undefined,
 			name: undefined,
+			yearsSmoking: undefined,
 			currency: undefined,
 			savedMoney: undefined,
 			phase: PHASES.PREPERATION,
-			phase1Since: undefined,
-			updateCigarettesPerBox: (cigarettesPerBox: number | undefined) =>
+			updateIsTestUser: (isTestUser: boolean) => set({ isTestUser }),
+			updateCigarettesPerBox: (cigarettesPerBox: string | undefined) =>
 				set({ cigarettesPerBox }),
-			updateBoxPrice: (boxPrice: number | undefined) => set({ boxPrice }),
+			updateBoxPrice: (boxPrice: string | undefined) => set({ boxPrice }),
 			updateAverageCigarettesSmokedPerDay: (
-				averageCigarettesSmokedPerDay: number | undefined,
+				averageCigarettesSmokedPerDay: string | undefined,
 			) => set({ averageCigarettesSmokedPerDay }),
 			updateName: (name: string) => set({ name }),
 			updateCurrency: (currency: Currency) => set({ currency }),
-			updateSavedMoney: (savedMoney: number) => set({ savedMoney }),
+			updateSavedMoney: (savedMoney: string) => set({ savedMoney }),
 			updatePhase: (phase: Phase) => set({ phase }),
-			updatePhase1Since: (phase1Since: Date | undefined) =>
-				set({ phase1Since }),
+			updateYearsSmoking: (yearsSmoking: string | undefined) =>
+				set({ yearsSmoking }),
 		}),
 		{
 			name: "quismo-storage",

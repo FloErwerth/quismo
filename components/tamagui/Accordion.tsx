@@ -4,20 +4,28 @@ import {
 	type AccordionMultipleProps,
 	Accordion as AccordionTamagui,
 	SizableText,
+	type SizableTextProps,
 	Square,
+	type AccordionItemProps as TamaguiAccordionItemProps,
 	View,
 	withStaticProperties,
 } from "tamagui";
 
 type AccordionItemProps = {
-	value: string;
 	itemTitle: string;
-} & PropsWithChildren;
+	itemTitleSize?: SizableTextProps["size"];
+} & PropsWithChildren &
+	Omit<TamaguiAccordionItemProps, "value">;
 
-const AccordionItem = ({ itemTitle, children }: AccordionItemProps) => {
+const AccordionItem = ({
+	itemTitle,
+	children,
+	itemTitleSize = "$6",
+	...props
+}: AccordionItemProps) => {
 	const id = useId();
 	return (
-		<AccordionTamagui.Item value={id}>
+		<AccordionTamagui.Item value={id} {...props}>
 			<AccordionTamagui.Trigger
 				borderWidth="$0"
 				padding={0}
@@ -35,7 +43,7 @@ const AccordionItem = ({ itemTitle, children }: AccordionItemProps) => {
 						flexDirection="row"
 						justifyContent="space-between"
 					>
-						<SizableText size="$6">{itemTitle}</SizableText>
+						<SizableText size={itemTitleSize}>{itemTitle}</SizableText>
 						<Square animation="quick" rotate={open ? "180deg" : "0deg"}>
 							<ChevronDown size="$1" />
 						</Square>
@@ -59,7 +67,7 @@ const AccordionWrapper = ({
 	...props
 }: Omit<AccordionMultipleProps, "type">) => {
 	return (
-		<AccordionTamagui gap="$4" type="multiple" {...props}>
+		<AccordionTamagui type="multiple" gap="$4" {...props}>
 			{children}
 		</AccordionTamagui>
 	);

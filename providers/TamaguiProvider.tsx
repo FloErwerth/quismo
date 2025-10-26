@@ -1,4 +1,3 @@
-import { createAnimations } from "@tamagui/animations-moti";
 import { config as defaultConfig } from "@tamagui/config/v3";
 import {
 	createFont,
@@ -6,7 +5,6 @@ import {
 	TamaguiProvider as TamaguiProviderCore,
 } from "@tamagui/core";
 import type { PropsWithChildren } from "react";
-import { Easing } from "react-native-reanimated";
 import { PortalProvider } from "tamagui";
 
 const font = createFont({
@@ -83,40 +81,8 @@ const font = createFont({
 	},
 });
 
-const easeIn = Easing.in(Easing.ease);
-const smoothBezier = Easing.bezier(0.215, 0.61, 0.355, 1.0);
 const config = createTamagui({
 	...defaultConfig,
-	animation: createAnimations({
-		bouncy: {
-			type: "spring",
-			damping: 9,
-			mass: 0.9,
-			stiffness: 150,
-		},
-		lazy: {
-			type: "spring",
-			damping: 18,
-			stiffness: 50,
-		},
-		slow: {
-			type: "spring",
-			damping: 15,
-			stiffness: 40,
-		},
-		quick: {
-			type: "spring",
-			damping: 20,
-			mass: 1.2,
-			stiffness: 250,
-		},
-		tooltip: {
-			type: "timing",
-			damping: 10,
-			mass: 0.9,
-			stiffness: 100,
-		},
-	}),
 	fonts: {
 		body: font,
 		heading: font,

@@ -1,11 +1,17 @@
 import type { ComponentProps } from "react";
-import { styled, Button as TamaguiButton } from "tamagui";
+import type { GestureResponderEvent } from "react-native";
+import {
+	debounce,
+	styled,
+	Button as TamaguiButton,
+	withStaticProperties,
+} from "tamagui";
 
 const StyledButton = styled(TamaguiButton, {
 	variants: {
 		disabled: {
 			true: {
-				color: "$color.gray1Light",
+				color: "$gray8Light",
 				backgroundColor: "$color.gray6Light",
 			},
 		},
@@ -21,9 +27,29 @@ const StyledButton = styled(TamaguiButton, {
 	},
 });
 
-export const Button = ({
+const DebouncedButton = ({
 	children,
+	debounceDuration = 250,
+	debounceLeading = true,
 	...props
-}: ComponentProps<typeof StyledButton>) => {
-	return <StyledButton {...props}>{children}</StyledButton>;
+}: ComponentProps<typeof StyledButton> & {
+	debounceDuration?: number;
+	debounceLeading?: boolean;
+}) => {
+	const handlePress = (event: GestureResponderEvent) => {
+		props.onPress?.(event);
+	};
+
+	return (
+		<StyledButton
+			{...props}
+			onPress={debounce(handlePress, debounceDuration, debounceLeading)}
+		>
+			{children}
+		</StyledButton>
+	);
 };
+
+export const Button = withStaticProperties(StyledButton, {
+	Debounced: DebouncedButton,
+});

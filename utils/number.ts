@@ -1,10 +1,11 @@
-export const safeParseFloat = (
-	value: string | undefined,
-): number | undefined => {
-	if (value === undefined || value === "") {
+export const isValidDecimalNumber = (text: string) => {
+	return /^(\d+)?([.,]?\d{0,})?$/.test(text);
+};
+
+export const parseDecimalNumber = (text: string) => {
+	if (!text) {
 		return undefined;
 	}
 
-	const parsed = Math.round(parseFloat(value) * 100) / 100;
-	return parsed;
+	return Number.parseFloat(text.replace(",", "."));
 };

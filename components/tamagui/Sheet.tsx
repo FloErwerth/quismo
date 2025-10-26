@@ -4,7 +4,7 @@ import {
 	SizableText,
 	View,
 } from "tamagui";
-import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
+import { Screen } from "@/components/Screens/Screen";
 
 export const Sheet = ({
 	children,
@@ -31,7 +31,7 @@ export const Sheet = ({
 						</SizableText>
 					</View>
 				)}
-				<ScrollableScreen>{children}</ScrollableScreen>
+				<Screen paddingTop={0}>{children}</Screen>
 			</SheetCore.Frame>
 		</SheetCore>
 	);
