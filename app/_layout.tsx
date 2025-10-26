@@ -37,14 +37,6 @@ const AppStack = () => {
 			</Stack.Protected>
 			<Stack.Protected guard={isSubscribed}>
 				<Stack.Screen name="(tabs)" />
-				<Stack.Screen name="preperationMotivation" />
-				<Stack.Screen
-					options={{ presentation: "pageSheet" }}
-					name="preperationHelp"
-				/>
-				<Stack.Screen name="preperationAnalysis" />
-				<Stack.Screen name="preperationSupport" />
-				<Stack.Screen name="preperationAlternatives" />
 			</Stack.Protected>
 		</Stack>
 	);

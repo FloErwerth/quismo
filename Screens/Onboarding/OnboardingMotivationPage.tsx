@@ -3,15 +3,13 @@ import { SizableText } from "tamagui";
 import { SelectableOptions } from "@/components/SelectableOptions/SelectableOptions";
 import { getMotivationOptions, type Motivation } from "@/config/preperation";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { usePreperationStore } from "@/storage/phaseStorage";
+import { useStore } from "@/storage/storage";
 
 export const OnboardingMotivationPage = () => {
 	const { t } = useTranslation();
-	const motivations = usePreperationStore((state) => state.motivations);
-	const addMotivation = usePreperationStore((state) => state.addMotivation);
-	const removeMotivation = usePreperationStore(
-		(state) => state.removeMotivation,
-	);
+	const motivations = useStore((state) => state.motivations);
+	const addMotivation = useStore((state) => state.addMotivation);
+	const removeMotivation = useStore((state) => state.removeMotivation);
 
 	const handleToggleMotivation = (id: Motivation) => {
 		if (motivations.includes(id)) {

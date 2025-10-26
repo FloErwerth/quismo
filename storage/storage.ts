@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { Currency } from "@/config/currencies";
+import type { Motivation } from "@/config/preperation";
 import { PHASES, type Phase } from "@/types";
 
 type StoreValues = {
@@ -14,6 +15,8 @@ type StoreValues = {
 	savedMoney: string | undefined;
 	yearsSmoking: string | undefined;
 	phase: Phase;
+	startOfPreperationPhase: Date | undefined;
+	motivations: Motivation[];
 };
 
 type StoreActions = {
@@ -28,11 +31,31 @@ type StoreActions = {
 	updateSavedMoney: (savedMoney: string) => void;
 	updatePhase: (phase: Phase) => void;
 	updateYearsSmoking: (yearsSmoking: string | undefined) => void;
+	setPreperationPhaseStartDate: (date: Date) => void;
+	addMotivation: (motivation: Motivation) => void;
+	removeMotivation: (motivationId: Motivation) => void;
+	setPhase: (phase: Phase) => void;
 };
 
 export const useStore = create(
 	persist<StoreValues & StoreActions>(
 		(set) => ({
+			startOfPreperationPhase: undefined,
+			motivations: [],
+			phase: PHASES.PREPERATION,
+			setPreperationPhaseStartDate: (date: Date) =>
+				set({ startOfPreperationPhase: date }),
+			addMotivation: (motivation: Motivation) =>
+				set((state) => ({
+					motivations: [...state.motivations, motivation],
+				})),
+			removeMotivation: (motivationId: Motivation) =>
+				set((state) => ({
+					motivations: state.motivations.filter(
+						(motivation) => motivation !== motivationId,
+					),
+				})),
+			setPhase: (phase: Phase) => set({ phase }),
 			isTestUser: false,
 			cigarettesPerBox: undefined,
 			boxPrice: undefined,
@@ -41,7 +64,6 @@ export const useStore = create(
 			yearsSmoking: undefined,
 			currency: undefined,
 			savedMoney: undefined,
-			phase: PHASES.PREPERATION,
 			updateIsTestUser: (isTestUser: boolean) => set({ isTestUser }),
 			updateCigarettesPerBox: (cigarettesPerBox: string | undefined) =>
 				set({ cigarettesPerBox }),

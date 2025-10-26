@@ -21,7 +21,7 @@ export const ScrollableScreen = ({
 				keyboardShouldPersistTaps={keyboardShouldPersistTaps}
 				contentContainerStyle={{
 					flexGrow: flex ? 1 : 0,
-					paddingTop: insets.top,
+					paddingTop: insets.top || 16,
 					paddingBottom: insets.bottom,
 					paddingHorizontal: insets.left,
 					paddingRight: insets.right,

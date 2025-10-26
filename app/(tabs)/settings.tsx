@@ -14,6 +14,7 @@ export default function Settings() {
 			{isTestUser && (
 				<Button onPress={() => updateIsTestUser(false)}>Reset Test User</Button>
 			)}
+			<Button>Account zurücksetzen (Abo wird nicht beendet)</Button>
 		</ScrollableScreen>
 	);
 }

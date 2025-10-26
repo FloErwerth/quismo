@@ -3,7 +3,6 @@ import { Card, SizableText, View, XStack } from "tamagui";
 import { currencySymbols } from "@/config/currencies";
 import { getMotivationOptions } from "@/config/preperation";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { usePreperationStore } from "@/storage/phaseStorage";
 import { useStore } from "@/storage/storage";
 
 export const OnboardingStartJourneyPage = () => {
@@ -14,7 +13,7 @@ export const OnboardingStartJourneyPage = () => {
 
 	const currency = useStore((state) => state.currency);
 	const name = useStore((state) => state.name);
-	const motivations = usePreperationStore((state) => state.motivations);
+	const motivations = useStore((state) => state.motivations);
 
 	const cigarettesPerBox = useStore((state) => state.cigarettesPerBox);
 	const boxPrice = useStore((state) => state.boxPrice);

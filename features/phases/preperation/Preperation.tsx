@@ -1,11 +1,5 @@
-import { PreperationQuestionCards } from "@/features/phases/preperation/PreperationCards";
-import { PreperationPhaseCard } from "@/features/phases/preperation/PreperationPhaseCard";
+import { SizableText } from "tamagui";
 
 export const PreperationHomeCompoonents = () => {
-	return (
-		<>
-			<PreperationPhaseCard />
-			<PreperationQuestionCards />
-		</>
-	);
+	return <SizableText>Vorbereitung</SizableText>;
 };
