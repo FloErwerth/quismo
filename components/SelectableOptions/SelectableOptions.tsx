@@ -13,20 +13,37 @@ const SelectableOptionsItem = <
 >({
 	item,
 	onSelect,
+	disabled,
 }: {
 	item: T[number];
 	onSelect: (item: T[number]) => void;
+	disabled?: boolean;
 }) => {
+	const backgroundColor = (() => {
+		if (item.isSelected) {
+			return "$blue11Light";
+		}
+
+		return disabled ? "$color.gray6Light" : "$gray3Light";
+	})();
+
+	const color = (() => {
+		if (item.isSelected) {
+			return "white";
+		}
+
+		return disabled ? "$gray8Light" : "$gray12Light";
+	})();
+
 	return (
 		<Button
 			size="$3"
 			borderRadius="$12"
-			backgroundColor={item.isSelected ? "$blue11Light" : "$gray3Light"}
+			disabled={disabled && !item.isSelected}
+			backgroundColor={backgroundColor}
 			onPress={() => onSelect(item)}
 		>
-			<SizableText color={item.isSelected ? "white" : "$gray12Light"}>
-				{item.label}
-			</SizableText>
+			<SizableText color={color}>{item.label}</SizableText>
 		</Button>
 	);
 };
@@ -36,6 +53,7 @@ export const SelectableOptions = <
 >({
 	onSelect,
 	items,
+	disabled,
 	...props
 }: SelectableOptionsProps<T>) => {
 	return (
@@ -47,7 +65,12 @@ export const SelectableOptions = <
 			{...props}
 		>
 			{items.map((item) => (
-				<SelectableOptionsItem key={item.id} item={item} onSelect={onSelect} />
+				<SelectableOptionsItem
+					disabled={disabled}
+					key={item.id}
+					item={item}
+					onSelect={onSelect}
+				/>
 			))}
 		</View>
 	);

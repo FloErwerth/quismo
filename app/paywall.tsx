@@ -6,7 +6,7 @@ import { PHASES } from "@/types";
 
 export default function Paywall() {
 	const setPreperationPhaseStartDate = useStore(
-		(state) => state.setPreperationPhaseStartDate,
+		(state) => state.setStartOfPreperationPhase,
 	);
 	const setPhase = useStore((state) => state.setPhase);
 	const { checkSubscription } = useSubscriptionContext();

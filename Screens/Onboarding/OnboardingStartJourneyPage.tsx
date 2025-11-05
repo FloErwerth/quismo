@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Card, SizableText, View, XStack } from "tamagui";
 import { currencySymbols } from "@/config/currencies";
-import { getMotivationOptions } from "@/config/preperation";
+import { getMotivationOptions } from "@/config/motivators";
 import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
 import { useStore } from "@/storage/storage";
 
@@ -34,11 +34,11 @@ export const OnboardingStartJourneyPage = () => {
 	const yearlyCost = (todayDailyCost * 365) / 2;
 
 	const mappedMotivations = motivations.map((motivation) => {
-		const option = getMotivationOptions(t)[motivation];
+		const option = getMotivationOptions(t)[motivation.id];
 
 		return (
 			<View
-				key={motivation}
+				key={motivation.id}
 				borderRadius="$6"
 				padding="$3"
 				backgroundColor="$blue2Light"

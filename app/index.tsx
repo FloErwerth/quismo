@@ -9,6 +9,7 @@ import "@/translation/i18next";
 import { useState } from "react";
 import { Alert } from "react-native";
 import { Sheet } from "@/components/tamagui/Sheet";
+import { useMotivationsStorage } from "@/storage/motivationsStorage";
 import { useStore } from "@/storage/storage";
 
 const password = "IWillMakeItQuitSmokingWithQuiSmo";
@@ -19,9 +20,15 @@ export default function Index() {
 	const [_, setNumberOfPresses] = useState(0);
 	const [passwordInput, setPasswordInput] = useState("");
 	const updateIsTestUser = useStore((store) => store.updateIsTestUser);
+	const setupTestMotivationsStorage = useMotivationsStorage(
+		(state) => state.setupTestMotivationsStorage,
+	);
+	const setupTestStorage = useStore((state) => state.setupTestStorage);
 
 	const handleTestLogin = () => {
 		if (passwordInput === password) {
+			setupTestMotivationsStorage();
+			setupTestStorage();
 			updateIsTestUser(true);
 		} else {
 			Alert.alert("Invalid credentials");

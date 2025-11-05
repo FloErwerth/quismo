@@ -15,31 +15,39 @@ export const Screen = ({
 	back = false,
 	title,
 	action,
+	gap = "$4",
+	marginTop = "$4",
 	...props
 }: ScreenProps) => {
 	const hasActionOrBack = !!back || !!action;
 	const { top } = useSafeAreaInsets();
 
 	return (
-		<View padding="$4" paddingTop={top || "$4"} gap="$4" {...props}>
+		<View padding="$4" paddingTop={top || "$4"} {...props}>
 			{(back || title || action) && (
 				<XStack alignItems="center">
-					<View flex={hasActionOrBack ? 0.2 : 0}>
-						<BackButton />
-					</View>
+					{hasActionOrBack && (
+						<View flex={0.2}>
+							<BackButton />
+						</View>
+					)}
 					<View flex={1}>
 						{title && (
-							<SizableText size="$9" textAlign="center">
+							<SizableText flex={1} size="$10" textAlign="center">
 								{title}
 							</SizableText>
 						)}
 					</View>
-					<View flex={hasActionOrBack ? 0.2 : 0} alignItems="flex-end">
-						{action}
-					</View>
+					{hasActionOrBack && (
+						<View flex={0.2} alignItems="flex-end">
+							{action}
+						</View>
+					)}
 				</XStack>
 			)}
-			{children}
+			<View gap={gap} flex={props.flex} marginTop={marginTop}>
+				{children}
+			</View>
 		</View>
 	);
 };

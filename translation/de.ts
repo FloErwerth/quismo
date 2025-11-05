@@ -97,7 +97,7 @@ export default {
 		},
 		motivation: {
 			title: "Was motiviert Dich am meisten, mit dem Rauchen aufzuhören?",
-			description: "Wähle mindestens eine Motivation",
+			description: "Wähle zwischen einer und vier Motivationen",
 			selectedCount: "{{count}}/{{total}} ausgewählt",
 		},
 		startJourney: {
