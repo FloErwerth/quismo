@@ -9,7 +9,6 @@ import {
 } from "react";
 import { Platform } from "react-native";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
-import { useStore } from "@/storage/storage";
 
 export const RevenueCatContext = createContext<
 	{ isSubscribed: boolean; checkSubscription: () => Promise<void> } | undefined
@@ -34,12 +33,7 @@ const RevenueCatSubscriptionProvider = ({
 	children,
 	isInitialized,
 }: PropsWithChildren<{ isInitialized: boolean }>) => {
-	const isTestUser = useStore((store) => store.isTestUser);
-	const isSubscriptionOverriden =
-		isTestUser ||
-		(__DEV__ && process.env.EXPO_PUBLIC_OVERRIDE_SUBSCRIPTION === "1");
-
-	const [isSubscribed, setIsSubscribed] = useState(isSubscriptionOverriden);
+	const [isSubscribed, setIsSubscribed] = useState(false);
 
 	const getIsSubscribedInRevenueCat = useCallback(async () => {
 		const customerInfo = await Purchases.getCustomerInfo();
@@ -78,7 +72,7 @@ const RevenueCatSubscriptionProvider = ({
 	return (
 		<RevenueCatContext.Provider
 			value={{
-				isSubscribed: isSubscriptionOverriden ? true : isSubscribed,
+				isSubscribed,
 				checkSubscription: doCheckSubscription,
 			}}
 		>
