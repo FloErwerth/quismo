@@ -99,4 +99,21 @@ export default {
 			evening: "Good evening",
 		},
 	},
+	welcome: {
+		title: "Well done!",
+		subtitle1:
+			"You have downloaded QuiSmo and taken the most important step towards your smoke-free life",
+		subtitle2:
+			"By downloading and opening the app, you have taken an active step towards quitting smoking",
+		subtitle3: "QuiSmo will support you in your next steps",
+		description:
+			"In the next steps, you will be asked about your current smoking habits and learn more about how QuiSmo supports you",
+		testLogin: {
+			title: "Test Login",
+			description: "This is the login sheet for testing the app",
+			passwordPlaceholder: "Test Password",
+			loginButton: "Login for Testing",
+			invalidCredentials: "Invalid credentials",
+		},
+	},
 } satisfies Translation<typeof de>;

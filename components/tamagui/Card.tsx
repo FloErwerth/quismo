@@ -1,6 +1,5 @@
-import { styled, Card as TamaguiCard } from "tamagui";
+import { type CardProps, Card as TamaguiCard } from "tamagui";
 
-export const Card = styled(TamaguiCard, {
-	padded: true,
-	elevate: true,
-});
+export const Card = ({ padded = true, ...cardProps }: CardProps) => {
+	return <TamaguiCard padded={padded} elevate={false} {...cardProps} />;
+};

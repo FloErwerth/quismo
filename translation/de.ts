@@ -1,107 +1,98 @@
 export default {
 	common: {
+		appName: "SmoQui",
 		next: "Weiter",
 		previous: "Zurück",
+		confirm: "Bestätigen",
+		cancel: "Abbrechen",
 		name: "Name",
 		terms: "Nutzungsbedingungen",
-		phases: {
-			preperation: {
-				naming: {
-					short: "Phase 1",
-					long: "Phase 1: Vorbereitung",
-				},
-			},
-			smokeStop: {
-				naming: {
-					short: "Phase 2",
-					long: "Phase 2: Rauchstopp",
-				},
-			},
-			stabilization: {
-				naming: {
-					short: "Phase 3",
-					long: "Phase 3: Stabilisierung",
-				},
-			},
-		},
 	},
 	tabs: {
 		home: "Home",
 		settings: "Einstellungen",
 	},
-	landing: {
-		headline: "Schritt für Schritt in ein rauchfreies Leben",
-		expect: "Das kann QuiSmo für dich tun:",
-		benefitLessStress: "Stressfreieres aufhören",
-		benefitControl: "Kontrolle behalten",
-		benefitHealth: "Gesundheit verbessern",
-		benefitMoney: "Bares Geld sparen",
-		disclaimer:
-			'Wenn "Beginne deinen Weg" gedrückt wird, stimmst Du unseren <strong>Nutzungsbedingungen</strong> zu',
-	},
 	onboarding: {
 		personalData: {
 			title: "Wie möchtest Du genannt werden?",
-			nameExplanation:
-				"Wir verwenden diese Information, um die App persönlicher zu gestalten. Alle gesammelten Informationen werden nicht an Dritte weitergegeben.",
+		},
+		goodHands: {
+			title: "So werde ich Dir helfen, {{name}}",
+			description1:
+				"Tägliche Check-Ins zum Reflektieren deiner Gefühle und Motivationen",
+			description2: "Verfolgung was mit deinem Körper passiert",
+			description3: "Herausforderungen und Ziele, um motiviert zu bleiben",
 		},
 		yearsSmoking: {
 			title: "Wie lange rauchst Du schon?",
 			label: "Jahre Rauchen",
-			explanation: "Das hilft uns dabei die Stärke deiner Sucht einzuschätzen",
-		},
-		method: {
-			title: "Das QuiSmo-System",
-			intro1:
-				"Bevor Du Informationen über dein Rauchverhalten eingibst möchten wir Dir erklären, wie das QuiSmo-System funktioniert",
-			intro2: "",
-			phase1: {
-				p1: "In dieser Phase kannst Du deinen Fokus auf die Motivation für den Rauchstopp richten.",
-				p2: "Dazu erhältst Du zum Beispiel Informationen über das Rauchen und festigst deine Motivation.",
-				durationLabel: "Dauer",
-				durationValue: "bis Du dich bereit fühlst",
-			},
-			phase2: {
-				p1: "Die heiße und wichtigste Phase. Ab dann bist Du offiziell Nicht-Raucher!",
-				p2: "Mache einen täglichen Check-In für dich, schaue Dir Prozesse in deinem Körper an und erhalte tägliche Tipps.",
-				durationLabel: "Dauer",
-				durationValue: "14 Tage",
-			},
-			phase3: {
-				p1: "Die letzte Phase. Hier geht es um die Stabiliserung deiner neuen Gewohnheiten.",
-				p2: "Du bekommst weiterhin Informationen über Prozesse in deinem Körper. Sammle deine Erfolge und komme so spielerisch zum Ziel.",
-				durationLabel: "Dauer",
-				durationValue: "3 Monate oder bis zu einem Rückfall",
-			},
 		},
 		price: {
 			title: "Wie viel Kostet eine Schachtel Zigaretten?",
 			amountLabel: "Betrag",
 			currencyLabel: "Währung",
 			currencySheetTitle: "Währung wählen",
-			currencyPlaceholder: "Währung wählen",
-			hint: "Es reicht, wenn Du einen ungefähren Wert eingibst. Dieser Wert wird dafür verwendet, um Deine Ersparnisse zu berechnen.",
+			currencyPlaceholder: "Auswählen",
 		},
 		numberPerDay: {
 			title: "Wie viele Zigaretten rauchst Du pro Tag?",
 			label: "Anzahl Zigaretten pro Tag",
-			subLabel: "Das hilft uns dabei die Stärke deiner Sucht einzuschätzen",
-			severity: {
-				unknown: "Unbekannt",
-				low: "Geringe Sucht",
-				mild: "Leichte Sucht",
-				moderate: "Mittlere Sucht",
-				strong: "Starke Sucht",
-				veryStrong: "Sehr Starke Sucht",
-			},
 		},
 		motivation: {
-			title: "Was motiviert Dich am meisten, mit dem Rauchen aufzuhören?",
-			description: "Wähle zwischen einer und vier Motivationen",
-			selectedCount: "{{count}}/{{total}} ausgewählt",
+			title: "Was ist dein Motivator?",
+			description:
+				"Warum möchtest Du mit dem Rauchen aufhören? Wähle die Motivation aus, welche am besten auf dich zutrifft",
+			selectedCount: "Bitte wähle eine Motivation",
+		},
+		concerns: {
+			title: "Hast Du Bedenken?",
+			description:
+				"Zu erkennen welche Ängste und Befürchtungen dich am stärksten beeinflussen ist wichtig, um deine Motivation zum Stoppen des Rauchens zu festigen",
+			hint: "Wähle bis zu drei Optionen aus, die am besten auf dich zutreffen",
+			selectedCount: "Ich habe keine Bedenken",
+			concernsText:
+				"Auch deine Bedenken werden nicht vergessen. QuiSmo bietet Dir Werkzeuge und Ablenkungen, wenn deine Entzugserscheinungen oder Verlangen zu groß werden.",
+		},
+		cigarettesPerBox: {
+			title: "Wie viele Zigaretten sind in einer Schachtel?",
+		},
+		motivationNextSteps: {
+			title: "Es geht um deine Motivation!",
+			description:
+				"Studien zeigen, dass die Motivation für das Aufhören des Rauchens am wichtigsten ist.",
+		},
+		smokingBehaviourPreperation: {
+			title: "Die nächsten Schritte",
+			description:
+				"Als nächstes werden Dir Fragen zum bisherigen Rauchverhalten gestellt. ",
+			hint: "Das ist wichtig, damit ich Dir bestmöglich helfen kann. Wenn Du einverstanden bist, dann lass uns anfangen.",
+		},
+		concernsResult: {
+			title: "Danke für deine ehrlichen Antworten!",
+			description:
+				"Du hast es geschafft und alle Fragen beantwortet! Du hast nun die Möglichkeit ein Abo für SmoQui abzuschließen",
+			description2:
+				"Du fragst Dich bestimmt, warum Du für SmoQui bezahlen solltest und hier sind die Gründe:",
+			description3:
+				"Mit der Bezahlung gehst Du eine finanzielle Verpflichtung ein, was deine Chancen auf die Erreichung deines Ziels erhöht",
+			description4:
+				"Die Kosten für die App minimal im Vergleich zu dem Geld, das Du im Lauf der Zeit an Zigratten sparen wirst",
+			description5: "Diese Abos stehen zur Auswahl:",
+			pricePerWeek: "{{price}} / Woche",
+			pricePerYear: "{{price}} / Jahr",
+			bestOffer: "Bestes Angebot!",
+			subscribeButton: "SmoQui abonnieren",
+			continueWithoutSubscriptionButton: "Ohne Abo fortfahren",
+		},
+		savings: {
+			title: "Gute Nachrichten!",
+			description:
+				"Nicht nur, dass Du durch das Nicht-Rauchen sehr viel gesünder leben wirst. Du sparst außerdem sehr viel Geld!",
+			monthlySavings: "In 30 Tagen sparst Du dir bereits",
+			nextButtonText: "Das sind gute Nachrichten!",
 		},
 		startJourney: {
-			title: "Bereit für dein rauchfreies Leben, {{name}}?",
+			title: "Schau Dir deine Ersparnissse an, {{name}}?",
 			intro: "Das sind deine Angaben:",
 			dailySavedLabel: "Jeden Tag gespartes Geld:",
 			sixYearsSavedLabel: "Gepartes Geld in 6 Jahren:",
@@ -112,28 +103,41 @@ export default {
 			startJourneyButton: "Ich möchte mit dem Rauchen aufhören",
 		},
 	},
-	phases: {
-		preperation: {
-			questions: {
-				confirm: "Auswahl bestätigen ({{count}})",
-			},
-			motivation: {
-				categories: {
-					health: "Gesundheit",
-					finance: "Finanzen",
-					family: "Familie",
-					freedom: "Freiheit",
-					pregnancy: "Schwangerschaft",
-					kids: "Kinder",
-					partner: "Partner",
-					sex: "Sex",
-					fitness: "Fitness",
-					smell: "Geruch",
-					taste: "Geschmack",
-					disease: "Krankheit",
-					experiences: "Erfahrungen",
-				},
-			},
+	motivation: {
+		categories: {
+			health: "Meine Gesundheit",
+			finance: "Finanzielle Gründe",
+			family: "Mein Familie",
+			freedom: "Mein Freiheit",
+			pregnancy: "Eine Schwangerschaft",
+			experiences: "Negative Erfahrungen",
+			wellBeing: "Mein Wohlbefinden",
+		},
+	},
+	concerns: {
+		categories: {
+			weightGain: "Gewichtszunahme",
+			strongCravings: "Starke Sucht",
+			moodChanges: "Stimmungsschwankungen",
+			stress: "Stress",
+			depression: "Depression",
+			fomo: "Verpasste soziale Erlebnisse",
+		},
+		goodNews: {
+			wellBeing:
+				"Das Wohlbefinden wird sich durch den Rauchstopp deutlich verbessern, denn alleine das gute Gefühl die Kontrolle zu übernehmen ist unbezahlbar.",
+			health:
+				"Deine Gesundheit wird sich mit dem Rauchstopp sehr schnell verbessern. Dein Körper beginnt sofort mit dem Heilungsprozess.",
+			finance:
+				"Das Aufhören mit dem Rauchen wird dir mit jeder eingesparten Zigarette bares Geld einsparen. ",
+			freedom:
+				"Mit dem Start des Rauchstopps wird zwar dein Verlangen erst einmal stärker werden, jedoch wird dieses Verlangen schnell abnehmen und Du wirst dich dann Frei fühlen.",
+			pregnancy:
+				"Eine Schwangerschaft ist ein sehr schöner Grund um aufzuhören. Glückwunsch! Du wirst damit bei der Entwicklung deines Kindes helfen.",
+			experiences:
+				"Egal welche Erfahrungen Du gemacht hast: Du machst den richtigen Schritt und verhinderst damit womöglich, dass weitere negative Erfahrungen passieren.",
+			family:
+				"Du zeigst deiner Familie mit dem Rauchstopp wie wichtig sie für dich sind.",
 		},
 	},
 	home: {
@@ -142,31 +146,21 @@ export default {
 			afternoon: "Guten Nachmittag",
 			evening: "Guten Abend",
 		},
-		phasesCard: {
-			preperation: {
-				title: "Vorbereitung auf den Rauchstopp",
-				questions: {
-					title: "Deine Vorbereitungsaufgaben",
-					motivation: {
-						title: "Motivation",
-						description: "Halte deine Motivationen fest",
-					},
-					analysis: {
-						title: "Analyse",
-						description: "Halte fest, warum du rauchen willst",
-					},
-					support: {
-						title: "Unterstützung",
-						description: "Lege deine Unterstützer fest",
-					},
-					alternative: {
-						title: "Alternativen",
-						description: "Lerne alternativen zum Rauchen kennen",
-					},
-				},
-				doneSteps:
-					"Du hast dich in {{steps}} von {{total}} Kategorien vorbereitet",
-			},
+	},
+	welcome: {
+		title: "Hi, ich bin SmoQui!",
+		subtitle1: "Ich bin hier, um dir zu helfen, rauchfrei zu werden.",
+		subtitle2: "Lass uns gemeinsam anfangen.",
+		subtitle3: "Ich werde dich bei deinen nächsten Schritten unterstützen.",
+		startButton: "Ich bin bereit!",
+		disclaimer:
+			'Wenn "Ich bin bereit!" gedrückt wird, stimmst Du unseren <strong>Nutzungsbedingungen</strong> zu',
+		testLogin: {
+			title: "Test-Anmeldung",
+			description: "Dies ist das Anmeldeformular zum Testen der App",
+			passwordPlaceholder: "Test-Passwort",
+			loginButton: "Zum Testen anmelden",
+			invalidCredentials: "Ungültige Anmeldedaten",
 		},
 	},
 } as const;

@@ -1,3 +1,4 @@
+import { Image } from "expo-image";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions } from "react-native";
@@ -7,20 +8,32 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SizableText, View } from "tamagui";
+import { SizableText, View, XStack } from "tamagui";
 import { ScrollView } from "@/components/ScrollView/ScrollView";
 import { useStepper } from "@/components/Stepper/Stepper";
+import { TextBubble } from "@/components/TextBubble";
 import { Button } from "@/components/tamagui/Button";
 
-type OnboardingPageProps = {
-	title: string;
-	onNext?: () => void;
+export type StepperPageProps = {
+	title?: string;
+	hideNextButton?: boolean;
+	onNext?: () => Promise<void>;
 	onPrevious?: () => void;
 	nextButtonText?: string;
 	previousButtonText?: string;
 	nextButtonDisabled?: boolean;
 	nextButtonIsLoadingButton?: boolean;
 	hidePreviousButton?: boolean;
+	bubbleTextConfig?: {
+		imageConfig?: {
+			source: string;
+			width: number;
+			height: number;
+		};
+		arrowTopPercentage?: number;
+		arrowPosition?: "left" | "right";
+		text: string;
+	};
 } & PropsWithChildren;
 
 const WIDTH = Dimensions.get("window").width;
@@ -97,7 +110,34 @@ const backwardExitingAnimation: EntryExitAnimationFunction = (values: {
 	};
 };
 
-export const OnboardingPage = ({
+const BubbleText = (config: StepperPageProps["bubbleTextConfig"]) => {
+	if (!config) {
+		return null;
+	}
+	const {
+		imageConfig,
+		text,
+		arrowTopPercentage = 60,
+		arrowPosition = "right",
+	} = config;
+	return (
+		<XStack>
+			<TextBubble
+				text={text}
+				arrowTopPercentage={arrowTopPercentage}
+				arrowPosition={arrowPosition}
+			/>
+			{imageConfig && (
+				<Image
+					source={imageConfig.source}
+					style={{ width: imageConfig.width, height: imageConfig.height }}
+				/>
+			)}
+		</XStack>
+	);
+};
+
+export const StepperPage = ({
 	title,
 	nextButtonText,
 	previousButtonText,
@@ -106,22 +146,32 @@ export const OnboardingPage = ({
 	hidePreviousButton,
 	onNext,
 	onPrevious,
+	hideNextButton,
+	bubbleTextConfig,
 	...props
-}: OnboardingPageProps) => {
+}: StepperPageProps) => {
 	const { t } = useTranslation();
 	const defaultNextButtonText = t("common.next");
 	const defaultPreviousButtonText = t("common.previous");
 	const { nextStep, previousStep, direction } = useStepper();
 	const { top } = useSafeAreaInsets();
 
-	const handleNext = () => {
-		onNext?.();
-		nextStep();
+	const handleNext = async () => {
+		try {
+			await onNext?.();
+			nextStep();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
-	const handlePrevious = () => {
-		onPrevious?.();
-		previousStep();
+	const handlePrevious = async () => {
+		try {
+			await onPrevious?.();
+			previousStep();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const durationBasedAnimations = (() => {
@@ -149,25 +199,33 @@ export const OnboardingPage = ({
 						gap: 16,
 					}}
 				>
-					<SizableText size="$10">{title}</SizableText>
-					{props.children}
-					<View flex={1} />
-					<Button.Debounced
-						size="$5"
-						onPress={handleNext}
-						disabled={nextButtonDisabled}
-					>
-						{nextButtonText ?? defaultNextButtonText}
-					</Button.Debounced>
 					{!hidePreviousButton && (
 						<Button.Debounced
-							variant="outlined"
-							size="$5"
+							alignSelf="flex-start"
+							variant="ghost"
+							padding="$2"
+							size="$6"
 							onPress={handlePrevious}
 						>
 							{previousButtonText ?? defaultPreviousButtonText}
 						</Button.Debounced>
 					)}
+					{bubbleTextConfig && <BubbleText {...bubbleTextConfig} />}
+					{title && <SizableText size="$10">{title}</SizableText>}
+					{props.children}
+					<View flex={1} />
+					<View gap="$2">
+						{!hideNextButton && (
+							<Button.Debounced
+								variant="secondary"
+								size="$6"
+								onPress={handleNext}
+								disabled={nextButtonDisabled}
+							>
+								{nextButtonText ?? defaultNextButtonText}
+							</Button.Debounced>
+						)}
+					</View>
 				</ScrollView>
 			</View>
 		</Animated.View>

@@ -1,10 +1,10 @@
 {
 	"expo": {
-		"name": "QuiSmo",
-		"slug": "quismo",
+		"name": "SmoQui",
+		"slug": "smoqui",
 		"version": "0.0.1",
 		"orientation": "portrait",
-		"scheme": "quismo",
+		"scheme": "smoqui",
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": true,
 		"ios": {

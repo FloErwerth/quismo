@@ -1,11 +1,12 @@
+import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
+import { StepperPage } from "@/components/Stepper/StepperPage";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
-import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { useStore } from "@/storage/storage";
+import { useStoreSelector } from "@/storage/storage";
 
 export const OnboardingPersonalData = () => {
-	const updateName = useStore((state) => state.updateName);
-	const name = useStore((state) => state.name);
+	const updateName = useStoreSelector((state) => state.updateName);
+	const name = useStoreSelector((state) => state.name);
 	const { t } = useTranslation();
 
 	const handleNameChange = (text: string) => {
@@ -18,16 +19,24 @@ export const OnboardingPersonalData = () => {
 	};
 
 	return (
-		<OnboardingPage
+		<StepperPage
+			onPrevious={() => router.navigate("/")}
 			nextButtonDisabled={name === undefined || name.length === 0}
-			title={t("onboarding.personalData.title")}
+			bubbleTextConfig={{
+				imageConfig: {
+					source: require("@/assets/images/smoqui_note.png"),
+					width: 150,
+					height: 125,
+				},
+				text: t("onboarding.personalData.title"),
+			}}
 		>
 			<OnboardingInput
 				label={t("common.name")}
-				subLabel={t("onboarding.personalData.nameExplanation")}
 				value={name}
 				onChangeText={handleNameChange}
+				autoComplete="given-name"
 			/>
-		</OnboardingPage>
+		</StepperPage>
 	);
 };

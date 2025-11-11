@@ -1,51 +1,50 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { produce } from "immer";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { useShallow } from "zustand/react/shallow";
+import { immer } from "zustand/middleware/immer";
 import type { Currency } from "@/config/currencies";
-import type { KnowledgeId } from "@/config/knowledge";
+import type { Concern, Motivation } from "@/config/motivationAndConcerns";
 import { createSelectors } from "@/storage/utils";
-import { PHASES, type Phase } from "@/types";
 
 export type StoreValues = {
-	// test
-	isTestUser: boolean;
 	// onboarding
+	onboardingCompleted: boolean;
 	cigarettesPerBox: string | undefined;
 	boxPrice: string | undefined;
 	averageCigarettesSmokedPerDay: string | undefined;
 	name: string | undefined;
 	currency: Currency | undefined;
-	savedMoney: string | undefined;
 	yearsSmoking: string | undefined;
-	// phases
-	phase: Phase;
 	// preperation
-	startOfPreperationPhase: Date | undefined;
 	didShowPreperationModal: boolean;
-	acquiredKnowledge: KnowledgeId[];
+	// check ins
+	checkIns: { date: Date }[];
+	hasSeenWelcomeDialog: boolean;
+	// motivation
+	motivation: Motivation | undefined;
+	concerns: Concern[];
 };
 
 const initialState: StoreValues = {
-	acquiredKnowledge: [],
-	startOfPreperationPhase: undefined,
-	phase: PHASES.PREPERATION,
+	// onboarding
+	name: undefined,
+	onboardingCompleted: false,
 	didShowPreperationModal: false,
-	isTestUser: false,
 	cigarettesPerBox: undefined,
 	boxPrice: undefined,
 	averageCigarettesSmokedPerDay: undefined,
-	name: undefined,
 	yearsSmoking: undefined,
 	currency: undefined,
-	savedMoney: undefined,
+	motivation: undefined,
+	concerns: [],
+	checkIns: [],
+	hasSeenWelcomeDialog: false,
 } as const;
 
 type StoreActions = {
-	// test
-	updateIsTestUser: (isTestUser: boolean) => void;
+	completeOnboarding: () => void;
 	// onboarding
+	resetAccount: (_keepCheckIns: boolean) => void;
 	updateCigarettesPerBox: (cigarettesPerBox: string | undefined) => void;
 	updateBoxPrice: (boxPrice: string | undefined) => void;
 	updateAverageCigarettesSmokedPerDay: (
@@ -53,72 +52,114 @@ type StoreActions = {
 	) => void;
 	updateName: (name: string) => void;
 	updateCurrency: (currency: Currency) => void;
-	updateSavedMoney: (savedMoney: string) => void;
-	updatePhase: (phase: Phase) => void;
 	updateYearsSmoking: (yearsSmoking: string | undefined) => void;
 	updateDidShowPreperationModal: (didShowPreperationModal: boolean) => void;
-	// phases
-	setPhase: (phase: Phase) => void;
-	// preperation
-	setStartOfPreperationPhase: (startOfPreperationPhase: Date) => void;
+	updateHasSeenWelcomeDialog: (hasSeenWelcomeDialog: boolean) => void;
+	// check ins
+	addCheckIn: (checkIn: { date: Date }) => void;
+	removeCheckIn: (checkIn: { date: Date }) => void;
+	// motivation
+	addMotivation: (motivation: Motivation) => void;
+	removeMotivation: (motivationId: Motivation) => void;
+	resetMotivationsStorage: () => void;
+	addConcern: (concern: Concern) => void;
+	removeConcern: (concernId: Concern) => void;
+	// general
 	resetStore: () => void;
-	addAcquiredKnowledge: (knowledgeId: KnowledgeId) => void;
-	removeAcquiredKnowledge: (knowledgeId: KnowledgeId) => void;
-	setupTestStorage: () => void;
 };
 
 export const useStore = create(
-	persist<StoreValues & StoreActions>(
-		(set, _, store) => ({
+	persist(
+		immer<StoreValues & StoreActions>((set, _, store) => ({
 			...initialState,
-			updateIsTestUser: (isTestUser: boolean) => set({ isTestUser }),
+			completeOnboarding: () =>
+				set((state) => {
+					state.onboardingCompleted = true;
+				}),
+			resetAccount: (_keepCheckIns: boolean) =>
+				set((state) => {
+					const newState: StoreValues = {
+						...initialState,
+						hasSeenWelcomeDialog: state.hasSeenWelcomeDialog,
+					};
+					if (_keepCheckIns) {
+						newState.checkIns = state.checkIns;
+					}
+					return newState;
+				}),
 			updateCigarettesPerBox: (cigarettesPerBox: string | undefined) =>
-				set({ cigarettesPerBox }),
-			updateBoxPrice: (boxPrice: string | undefined) => set({ boxPrice }),
+				set((state) => {
+					state.cigarettesPerBox = cigarettesPerBox;
+				}),
+			updateBoxPrice: (boxPrice: string | undefined) =>
+				set((state) => {
+					state.boxPrice = boxPrice;
+				}),
 			updateAverageCigarettesSmokedPerDay: (
 				averageCigarettesSmokedPerDay: string | undefined,
-			) => set({ averageCigarettesSmokedPerDay }),
-			updateName: (name: string) => set({ name }),
-			updateCurrency: (currency: Currency) => set({ currency }),
-			updateSavedMoney: (savedMoney: string) => set({ savedMoney }),
-			updatePhase: (phase: Phase) => set({ phase }),
-			updateYearsSmoking: (yearsSmoking: string | undefined) =>
-				set({ yearsSmoking }),
-			updateDidShowPreperationModal: (didShowPreperationModal: boolean) =>
-				set({ didShowPreperationModal }),
-			setPhase: (phase: Phase) => set({ phase }),
-			setStartOfPreperationPhase: (startOfPreperationPhase: Date) =>
-				set({ startOfPreperationPhase }),
-
-			addAcquiredKnowledge: (knowledgeId: KnowledgeId) =>
-				set((state) =>
-					produce(state, (draft) => {
-						if (draft.acquiredKnowledge.includes(knowledgeId)) {
-							return;
-						}
-						draft.acquiredKnowledge.push(knowledgeId);
-					}),
-				),
-			removeAcquiredKnowledge: (knowledgeId: KnowledgeId) =>
-				set((state) =>
-					produce(state, (draft) => {
-						const index = draft.acquiredKnowledge.indexOf(knowledgeId);
-						if (index === -1) {
-							return;
-						}
-						draft.acquiredKnowledge.splice(index, 1);
-					}),
-				),
-			resetStore: () => set(store.getInitialState()),
-			setupTestStorage: () =>
-				set({
-					isTestUser: true,
-					phase: PHASES.PREPERATION,
-					startOfPreperationPhase: new Date(),
-					acquiredKnowledge: [],
-					didShowPreperationModal: false,
+			) =>
+				set((state) => {
+					state.averageCigarettesSmokedPerDay = averageCigarettesSmokedPerDay;
 				}),
-		}),
+			updateName: (name: string) =>
+				set((state) => {
+					state.name = name;
+				}),
+			updateCurrency: (currency: Currency) =>
+				set((state) => {
+					state.currency = currency;
+				}),
+			updateYearsSmoking: (yearsSmoking: string | undefined) =>
+				set((state) => {
+					state.yearsSmoking = yearsSmoking;
+				}),
+			updateDidShowPreperationModal: (didShowPreperationModal: boolean) =>
+				set((state) => {
+					state.didShowPreperationModal = didShowPreperationModal;
+				}),
+			updateHasSeenWelcomeDialog: (hasSeenWelcomeDialog: boolean) =>
+				set((state) => {
+					state.hasSeenWelcomeDialog = hasSeenWelcomeDialog;
+				}),
+			resetStore: () =>
+				set(() => {
+					return store.getInitialState();
+				}),
+			addCheckIn: (checkIn: { date: Date }) =>
+				set((state) => {
+					state.checkIns.push(checkIn);
+				}),
+			removeCheckIn: (checkIn: { date: Date }) =>
+				set((state) => {
+					state.checkIns.splice(state.checkIns.indexOf(checkIn), 1);
+				}),
+
+			// motivation
+			motivation: undefined,
+			concerns: [],
+			addConcern: (concern: Concern) =>
+				set((state) => {
+					state.concerns.push(concern);
+				}),
+			removeConcern: (concernId: Concern) =>
+				set((state) => {
+					state.concerns = state.concerns.filter(
+						(concern) => concern !== concernId,
+					);
+				}),
+			addMotivation: (motivation: Motivation | undefined) =>
+				set((state) => {
+					state.motivation = motivation;
+				}),
+			removeMotivation: () =>
+				set((state) => {
+					state.motivation = undefined;
+				}),
+			resetMotivationsStorage: () =>
+				set((state) => {
+					state.motivation = undefined;
+				}),
+		})),
 		{
 			name: "quismo-storage",
 			storage: createJSONStorage(() => AsyncStorage),
@@ -126,8 +167,4 @@ export const useStore = create(
 	),
 );
 
-export const useStoreSelector = <T>(selector: (state: StoreValues) => T): T => {
-	const base = createSelectors(useStore);
-
-	return useShallow(base)(selector) as T;
-};
+export const useStoreSelector = createSelectors(useStore);

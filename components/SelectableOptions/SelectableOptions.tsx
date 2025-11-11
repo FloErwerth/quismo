@@ -24,7 +24,7 @@ const SelectableOptionsItem = <
 			return "$blue11Light";
 		}
 
-		return disabled ? "$color.gray6Light" : "$gray3Light";
+		return disabled ? "$color.gray2Light" : "$gray3Light";
 	})();
 
 	const color = (() => {
@@ -37,13 +37,15 @@ const SelectableOptionsItem = <
 
 	return (
 		<Button
-			size="$3"
+			size="$4"
 			borderRadius="$12"
 			disabled={disabled && !item.isSelected}
 			backgroundColor={backgroundColor}
 			onPress={() => onSelect(item)}
 		>
-			<SizableText color={color}>{item.label}</SizableText>
+			<SizableText color={color} size="$6">
+				{item.label}
+			</SizableText>
 		</Button>
 	);
 };
@@ -65,12 +67,18 @@ export const SelectableOptions = <
 			{...props}
 		>
 			{items.map((item) => (
-				<SelectableOptionsItem
-					disabled={disabled}
+				<View
 					key={item.id}
-					item={item}
-					onSelect={onSelect}
-				/>
+					animation="bouncy"
+					enterStyle={{ scale: 0.8 - Math.random() * 0.2 }}
+					scale={1}
+				>
+					<SelectableOptionsItem
+						disabled={disabled}
+						item={item}
+						onSelect={onSelect}
+					/>
+				</View>
 			))}
 		</View>
 	);

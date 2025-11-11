@@ -4,7 +4,7 @@ import {
 } from "react-native-keyboard-controller";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTokenValue } from "tamagui";
-import { GradientBackground } from "@/components/Screens/GradientBackground";
+import { GradientBackground } from "@/components/Backgrounds/GradientBackground";
 import { Screen, type ScreenProps } from "@/components/Screens/Screen";
 
 export const ScrollableScreen = ({

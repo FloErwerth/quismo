@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { SizableText, View, XStack } from "tamagui";
+import { StepperPage } from "@/components/Stepper/StepperPage";
 import { Select } from "@/components/tamagui/Select";
 import {
 	type Currency,
@@ -7,24 +8,31 @@ import {
 	currenciesArray,
 } from "@/config/currencies";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
-import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
-import { useStore } from "@/storage/storage";
+import { useStoreSelector } from "@/storage/storage";
 
 export const OnboardingPricePerBoxPage = () => {
 	const { t } = useTranslation();
-	const boxPrice = useStore((state) => state.boxPrice);
-	const updateBoxPrice = useStore((state) => state.updateBoxPrice);
-	const currency = useStore((state) => state.currency);
-	const updateCurrency = useStore((state) => state.updateCurrency);
+	const boxPrice = useStoreSelector((state) => state.boxPrice);
+	const updateBoxPrice = useStoreSelector((state) => state.updateBoxPrice);
+	const currency = useStoreSelector((state) => state.currency);
+	const updateCurrency = useStoreSelector((state) => state.updateCurrency);
 
 	return (
-		<OnboardingPage
+		<StepperPage
 			nextButtonDisabled={
 				boxPrice === undefined ||
 				Number.isNaN(Number(boxPrice)) ||
 				currency === undefined
 			}
-			title={t("onboarding.price.title")}
+			bubbleTextConfig={{
+				imageConfig: {
+					source: require("@/assets/images/smoqui_note.png"),
+					width: 150,
+					height: 150,
+				},
+				arrowTopPercentage: 35,
+				text: t("onboarding.price.title"),
+			}}
 		>
 			<XStack gap="$2">
 				<View gap="$2" flex={1}>
@@ -37,7 +45,7 @@ export const OnboardingPricePerBoxPage = () => {
 					/>
 				</View>
 				<View gap="$2" flex={1}>
-					<SizableText size="$5">
+					<SizableText size="$8">
 						{t("onboarding.price.currencyLabel")}
 					</SizableText>
 					<Select<Currency[]>
@@ -50,9 +58,6 @@ export const OnboardingPricePerBoxPage = () => {
 					/>
 				</View>
 			</XStack>
-			<SizableText size="$5" color="$color.gray9Light">
-				{t("onboarding.price.hint")}
-			</SizableText>
-		</OnboardingPage>
+		</StepperPage>
 	);
 };

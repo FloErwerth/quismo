@@ -1,10 +1,9 @@
 import { Image } from "expo-image";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-import { Button, SizableText, View, XStack } from "tamagui";
+import { SizableText, View, XStack } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { useStore } from "@/storage/storage";
-import { MotviatorsCard } from "./MotviatorsCard";
 
 const getGreetingByTime = (t: TFunction) => {
 	const hours = new Date().getHours();
@@ -35,10 +34,6 @@ export const HomeScreen = () => {
 					</SizableText>
 				</View>
 			</XStack>
-			<MotviatorsCard />
-			<Button onPress={() => useStore.getState().resetStore()}>
-				Reset store
-			</Button>
 		</ScrollableScreen>
 	);
 };

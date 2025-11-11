@@ -35,11 +35,11 @@ export const Select = <T extends string[]>(props: SelectProps<T>) => {
 		<>
 			<Button
 				variant="outlined"
-				size="$5"
+				size="$6"
 				borderWidth="$0.5"
 				borderColor="$color.gray5Light"
 				backgroundColor="$color.gray2Light"
-				borderRadius="$4"
+				borderRadius="$6"
 				onPress={() => setOpen(true)}
 			>
 				{value}

@@ -1,24 +1,32 @@
-import { GradientBackground } from "@/components/Screens/GradientBackground";
+import { GradientBackground } from "@/components/Backgrounds/GradientBackground";
 import { Stepper } from "@/components/Stepper/Stepper";
 import { OnboardingCigarettesPerBoxPage } from "@/Screens/Onboarding/OnboardingCigarettesPerBoxPage";
 import { OnboardingCigarettesPerDayPage } from "@/Screens/Onboarding/OnboardingCigarettesPerDayPage";
-import { OnboardingMethodScreen } from "@/Screens/Onboarding/OnboardingMethodScreen";
+import { OnboardingConcernsPage } from "@/Screens/Onboarding/OnboardingConcernsPage";
+import { OnboardingGoodHandsPage } from "@/Screens/Onboarding/OnboardingGoodHandsPage";
+import { OnboardingPaywall } from "@/Screens/Onboarding/OnboardingMotivationConcernsResultPage";
+import { OnboardingMotivationNextStepsPage } from "@/Screens/Onboarding/OnboardingMotivationNextStepsPage";
 import { OnboardingMotivationPage } from "@/Screens/Onboarding/OnboardingMotivationPage";
 import { OnboardingPersonalData } from "@/Screens/Onboarding/OnboardingPersonalData";
 import { OnboardingPricePerBoxPage } from "@/Screens/Onboarding/OnboardingPricePerBoxPage";
-import { OnboardingStartJourneyPage } from "@/Screens/Onboarding/OnboardingStartJourneyPage";
+import { OnboardingSavingsPage } from "@/Screens/Onboarding/OnboardingSavingsPage";
+import { OnboardingSmokingBehaviourPreperationPage } from "@/Screens/Onboarding/OnboardingSmokingBehaviourPreperationPage";
 
 export const OnboardingStepper = () => {
 	return (
 		<GradientBackground>
 			<Stepper>
-				<OnboardingMethodScreen key="method" />
 				<OnboardingPersonalData key="personal-data" />
+				<OnboardingGoodHandsPage key="good-hands" />
+				<OnboardingSmokingBehaviourPreperationPage key="smoking-behaviour-preperation" />
 				<OnboardingCigarettesPerDayPage key="cigarettes-per-day" />
 				<OnboardingCigarettesPerBoxPage key="cigarettes-per-box" />
 				<OnboardingPricePerBoxPage key="price-per-box" />
+				<OnboardingSavingsPage key="start-journey" />
+				<OnboardingMotivationNextStepsPage key="motivation-next-steps" />
 				<OnboardingMotivationPage key="motivation" />
-				<OnboardingStartJourneyPage key="start-journey" />
+				<OnboardingConcernsPage key="concerns" />
+				<OnboardingPaywall key="motivation-concerns-result" />
 			</Stepper>
 		</GradientBackground>
 	);

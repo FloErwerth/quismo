@@ -1,19 +1,18 @@
-import { Lexend_100Thin } from "@expo-google-fonts/lexend/100Thin";
-import { Lexend_200ExtraLight } from "@expo-google-fonts/lexend/200ExtraLight";
-import { Lexend_300Light } from "@expo-google-fonts/lexend/300Light";
-import { Lexend_400Regular } from "@expo-google-fonts/lexend/400Regular";
-import { Lexend_500Medium } from "@expo-google-fonts/lexend/500Medium";
-import { Lexend_600SemiBold } from "@expo-google-fonts/lexend/600SemiBold";
-import { Lexend_700Bold } from "@expo-google-fonts/lexend/700Bold";
-import { Lexend_800ExtraBold } from "@expo-google-fonts/lexend/800ExtraBold";
-import { Lexend_900Black } from "@expo-google-fonts/lexend/900Black";
+import {
+	Nunito_400Regular,
+	Nunito_500Medium,
+	Nunito_600SemiBold,
+	Nunito_700Bold,
+	Nunito_800ExtraBold,
+	Nunito_900Black,
+} from "@expo-google-fonts/nunito";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "react-native";
-import { GradientBackground } from "@/components/Screens/GradientBackground";
+import { GradientBackground } from "@/components/Backgrounds/GradientBackground";
 import { Providers } from "@/providers";
-import { useIsSubscribed } from "@/providers/RevenueCat";
+import { useStoreSelector } from "@/storage/storage";
 
 SplashScreen.setOptions({
 	duration: 1000,
@@ -23,19 +22,24 @@ SplashScreen.setOptions({
 SplashScreen.preventAutoHideAsync();
 
 const AppStack = () => {
-	const isSubscribed = useIsSubscribed();
+	const onboardingCompleted = useStoreSelector(
+		(state) => state.onboardingCompleted,
+	);
+
 	return (
 		<Stack
-			initialRouteName={isSubscribed ? "(tabs)" : "index"}
+			initialRouteName={onboardingCompleted ? "(tabs)" : "index"}
 			screenOptions={{
 				headerShown: false,
+				gestureEnabled: false,
 			}}
 		>
-			<Stack.Protected guard={!isSubscribed}>
+			<Stack.Protected guard={!onboardingCompleted}>
 				<Stack.Screen name="index" />
 				<Stack.Screen name="onboarding" />
 			</Stack.Protected>
-			<Stack.Protected guard={isSubscribed}>
+			<Stack.Protected guard={onboardingCompleted}>
+				<Stack.Screen name="checkIn" />
 				<Stack.Screen name="(tabs)" />
 			</Stack.Protected>
 		</Stack>
@@ -44,15 +48,12 @@ const AppStack = () => {
 
 export default function RootLayout() {
 	const [loaded] = useFonts({
-		Thin: Lexend_100Thin,
-		ExtraLight: Lexend_200ExtraLight,
-		Light: Lexend_300Light,
-		Regular: Lexend_400Regular,
-		Medium: Lexend_500Medium,
-		SemiBold: Lexend_600SemiBold,
-		Bold: Lexend_700Bold,
-		ExtraBold: Lexend_800ExtraBold,
-		Black: Lexend_900Black,
+		Regular: Nunito_400Regular,
+		Medium: Nunito_500Medium,
+		SemiBold: Nunito_600SemiBold,
+		Bold: Nunito_700Bold,
+		ExtraBold: Nunito_800ExtraBold,
+		Black: Nunito_900Black,
 	});
 
 	if (!loaded) {

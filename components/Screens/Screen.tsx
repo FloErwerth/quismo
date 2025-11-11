@@ -33,7 +33,7 @@ export const Screen = ({
 					)}
 					<View flex={1}>
 						{title && (
-							<SizableText flex={1} size="$10" textAlign="center">
+							<SizableText flex={1} size="$8" textAlign="center">
 								{title}
 							</SizableText>
 						)}

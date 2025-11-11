@@ -1,24 +1,21 @@
 import { useTranslation } from "react-i18next";
 import { SizableText } from "tamagui";
 import { SelectableOptions } from "@/components/SelectableOptions/SelectableOptions";
-import { getMotivationOptions, type Motivation } from "@/config/motivators";
-import { OnboardingPage } from "@/Screens/Onboarding/components/OnboardingPage";
+import { StepperPage } from "@/components/Stepper/StepperPage";
 import {
-	useMotivationsStorage,
-	useMotivationsStorageSelector,
-} from "@/storage/motivationsStorage";
+	getMotivationOptions,
+	type Motivation,
+} from "@/config/motivationAndConcerns";
+import { useStoreSelector } from "@/storage/storage";
 
 export const OnboardingMotivationPage = () => {
 	const { t } = useTranslation();
-	const motivations = useMotivationsStorageSelector(
-		(state) => state.motivations,
-	);
-	const addMotivation = useMotivationsStorage((state) => state.addMotivation);
-	const removeMotivation = useMotivationsStorage(
-		(state) => state.removeMotivation,
-	);
+	const selectedMotivation = useStoreSelector((state) => state.motivation);
+	const addMotivation = useStoreSelector((state) => state.addMotivation);
+	const removeMotivation = useStoreSelector((state) => state.removeMotivation);
+
 	const handleToggleMotivation = (id: Motivation) => {
-		if (motivations.some((currentMotivation) => currentMotivation === id)) {
+		if (selectedMotivation === id) {
 			removeMotivation(id);
 		} else {
 			addMotivation(id);
@@ -29,32 +26,37 @@ export const OnboardingMotivationPage = () => {
 		(motivation) => ({
 			id: motivation.id,
 			label: motivation.label,
-			isSelected: motivations.some(
-				(currentMotivation) => currentMotivation === motivation.id,
-			),
+			isSelected: selectedMotivation === motivation.id,
 		}),
 	);
 
 	return (
-		<OnboardingPage
-			nextButtonDisabled={motivations.length <= 0}
+		<StepperPage
+			nextButtonDisabled={selectedMotivation === undefined}
 			nextButtonText={
-				motivations.length === 0
-					? t("onboarding.motivation.selectedCount", {
-							count: motivations.length,
-							total: 1,
-						})
+				selectedMotivation === undefined
+					? t("onboarding.motivation.selectedCount")
 					: undefined
 			}
-			title={t("onboarding.motivation.title")}
+			bubbleTextConfig={{
+				imageConfig: {
+					source: require("@/assets/images/smoqui_note.png"),
+					width: 150,
+					height: 150,
+				},
+				arrowPosition: "right",
+				text: t("onboarding.motivation.title"),
+			}}
 		>
-			<SizableText>{t("onboarding.motivation.description")}</SizableText>
+			<SizableText size="$8">
+				{t("onboarding.motivation.description")}
+			</SizableText>
 			<SelectableOptions
-				disabled={motivations.length >= 4}
+				disabled={selectedMotivation !== undefined}
 				onSelect={(item) => handleToggleMotivation(item.id)}
 				flexWrap="wrap"
 				items={selectabledItems}
 			/>
-		</OnboardingPage>
+		</StepperPage>
 	);
 };

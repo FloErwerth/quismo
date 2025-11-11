@@ -1,11 +1,12 @@
 import {
 	createContext,
-	type ReactNode,
+	type ReactElement,
 	useContext,
 	useRef,
 	useState,
 	useTransition,
 } from "react";
+import type { StepperPageProps } from "@/components/Stepper/StepperPage";
 
 const StepperContext = createContext<
 	| {
@@ -26,7 +27,7 @@ export const useStepper = () => {
 };
 
 type StepperProps = {
-	children: ReactNode[];
+	children: (ReactElement<StepperPageProps> | null)[];
 };
 export const Stepper = ({ children }: StepperProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -68,7 +69,7 @@ export const Stepper = ({ children }: StepperProps) => {
 				direction,
 			}}
 		>
-			{children[activeIndex]}
+			{children.filter((child) => child !== null)[activeIndex]}
 		</StepperContext.Provider>
 	);
 };

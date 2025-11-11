@@ -4,6 +4,7 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RevenueCatProvider } from "@/providers/RevenueCat";
 import { TamaguiProvider } from "./TamaguiProvider";
+
 export const Providers = ({ children }: PropsWithChildren) => {
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
