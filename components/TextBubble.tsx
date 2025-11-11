@@ -15,7 +15,7 @@ export const TextBubble = ({
 	text,
 	arrowTopPercentage,
 	arrowPosition = "right",
-	size = "$10",
+	size = "$8",
 }: TextBubbleProps) => {
 	const [viewWidth, setViewWidth] = useState(0);
 

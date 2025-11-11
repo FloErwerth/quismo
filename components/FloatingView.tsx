@@ -2,11 +2,12 @@ import type { PropsWithChildren } from "react";
 import Animated, { type CSSAnimationKeyframes } from "react-native-reanimated";
 import { View, type ViewProps } from "tamagui";
 
-type FloatingViewProps = PropsWithChildren & {
+export type FloatingViewProps = PropsWithChildren & {
 	width?: `${number}%`;
 	showShadow?: boolean;
 	translateYDeviation?: number;
 	pulse?: boolean;
+	doFloat?: boolean;
 	active?: boolean;
 } & Omit<ViewProps, "width">;
 
@@ -16,6 +17,7 @@ export const FloatingView = ({
 	showShadow = true,
 	translateYDeviation = 2,
 	pulse = false,
+	doFloat = false,
 	active = true,
 	...props
 }: FloatingViewProps) => {
@@ -53,7 +55,7 @@ export const FloatingView = ({
 		},
 	};
 
-	const float: CSSAnimationKeyframes = {
+	const floatAnimation: CSSAnimationKeyframes = {
 		from: {
 			transform: [{ translateY: 0 }],
 		},
@@ -76,8 +78,8 @@ export const FloatingView = ({
 			>
 				<Animated.View
 					style={{
-						animationPlayState: active ? "running" : "paused",
-						animationName: float,
+						animationPlayState: active && doFloat ? "running" : "paused",
+						animationName: floatAnimation,
 						animationDuration: "2s",
 						animationIterationCount: "infinite",
 						animationTimingFunction: "ease-in-out",

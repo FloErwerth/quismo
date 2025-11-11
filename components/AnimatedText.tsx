@@ -38,7 +38,7 @@ export const AnimatedText = ({
 						initialDelay + additionalDelay + index * wordsDelay,
 					)}
 				>
-					<SizableText {...props}>
+					<SizableText {...props} textAlign="left">
 						{part} {index < parts.length - 1 && ""}
 					</SizableText>
 				</Animated.View>

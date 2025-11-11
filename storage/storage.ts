@@ -9,6 +9,7 @@ import { createSelectors } from "@/storage/utils";
 export type StoreValues = {
 	// onboarding
 	onboardingCompleted: boolean;
+	checkInTime: Date | undefined;
 	cigarettesPerBox: string | undefined;
 	boxPrice: string | undefined;
 	averageCigarettesSmokedPerDay: string | undefined;
@@ -28,6 +29,7 @@ export type StoreValues = {
 const initialState: StoreValues = {
 	// onboarding
 	name: undefined,
+	checkInTime: undefined,
 	onboardingCompleted: false,
 	didShowPreperationModal: false,
 	cigarettesPerBox: undefined,
@@ -47,6 +49,7 @@ type StoreActions = {
 	resetAccount: (_keepCheckIns: boolean) => void;
 	updateCigarettesPerBox: (cigarettesPerBox: string | undefined) => void;
 	updateBoxPrice: (boxPrice: string | undefined) => void;
+	updateCheckInTime: (checkInTime: Date | undefined) => void;
 	updateAverageCigarettesSmokedPerDay: (
 		averageCigarettesSmokedPerDay: string | undefined,
 	) => void;
@@ -94,6 +97,10 @@ export const useStore = create(
 			updateBoxPrice: (boxPrice: string | undefined) =>
 				set((state) => {
 					state.boxPrice = boxPrice;
+				}),
+			updateCheckInTime: (checkInTime: Date | undefined) =>
+				set((state) => {
+					state.checkInTime = checkInTime;
 				}),
 			updateAverageCigarettesSmokedPerDay: (
 				averageCigarettesSmokedPerDay: string | undefined,

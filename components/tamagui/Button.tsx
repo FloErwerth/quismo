@@ -6,7 +6,10 @@ import {
 	Button as TamaguiButton,
 	withStaticProperties,
 } from "tamagui";
-import { FloatingView } from "@/components/FloatingView";
+import {
+	FloatingView,
+	type FloatingViewProps,
+} from "@/components/FloatingView";
 
 const StyledButton = styled(TamaguiButton, {
 	variants: {
@@ -62,13 +65,16 @@ const DebouncedButton = ({
 
 const FloatingButton = ({
 	children,
+	floatingProps,
 	...props
 }: ComponentProps<typeof StyledButton> & {
+	floatingProps?: FloatingViewProps;
+} & {
 	debounceDuration?: number;
 	debounceLeading?: boolean;
 }) => {
 	return (
-		<FloatingView>
+		<FloatingView {...floatingProps}>
 			<StyledButton {...props}>{children}</StyledButton>
 		</FloatingView>
 	);
