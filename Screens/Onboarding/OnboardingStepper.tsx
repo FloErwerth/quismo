@@ -1,5 +1,6 @@
 import { GradientBackground } from "@/components/Backgrounds/GradientBackground";
 import { Stepper } from "@/components/Stepper/Stepper";
+import { OnboardingCheckInTimePage } from "@/Screens/Onboarding/OnboardingCheckInTimePage";
 import { OnboardingCigarettesPerBoxPage } from "@/Screens/Onboarding/OnboardingCigarettesPerBoxPage";
 import { OnboardingCigarettesPerDayPage } from "@/Screens/Onboarding/OnboardingCigarettesPerDayPage";
 import { OnboardingConcernsPage } from "@/Screens/Onboarding/OnboardingConcernsPage";
@@ -11,7 +12,6 @@ import { OnboardingPersonalData } from "@/Screens/Onboarding/OnboardingPersonalD
 import { OnboardingPricePerBoxPage } from "@/Screens/Onboarding/OnboardingPricePerBoxPage";
 import { OnboardingSavingsPage } from "@/Screens/Onboarding/OnboardingSavingsPage";
 import { OnboardingSmokingBehaviourPreperationPage } from "@/Screens/Onboarding/OnboardingSmokingBehaviourPreperationPage";
-
 export const OnboardingStepper = () => {
 	return (
 		<GradientBackground>
@@ -23,6 +23,7 @@ export const OnboardingStepper = () => {
 				<OnboardingCigarettesPerBoxPage key="cigarettes-per-box" />
 				<OnboardingPricePerBoxPage key="price-per-box" />
 				<OnboardingSavingsPage key="start-journey" />
+				<OnboardingCheckInTimePage key="check-in-time" />
 				<OnboardingMotivationNextStepsPage key="motivation-next-steps" />
 				<OnboardingMotivationPage key="motivation" />
 				<OnboardingConcernsPage key="concerns" />
