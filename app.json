@@ -9,7 +9,7 @@
 		"newArchEnabled": true,
 		"ios": {
 			"icon": "./assets/images/ios-light.png",
-			"bundleIdentifier": "de.florian.erwerth.quismo",
+			"bundleIdentifier": "de.florian.erwerth.smoqui",
 			"supportsTablet": false,
 			"infoPlist": {
 				"ITSAppUsesNonExemptEncryption": false
@@ -24,7 +24,7 @@
 			},
 			"edgeToEdgeEnabled": true,
 			"predictiveBackGestureEnabled": false,
-			"package": "de.florian.erwerth.quismo"
+			"package": "de.florian.erwerth.smoqui"
 		},
 		"plugins": [
 			"expo-router",
