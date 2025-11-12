@@ -13,7 +13,8 @@
 			"supportsTablet": false,
 			"infoPlist": {
 				"ITSAppUsesNonExemptEncryption": false
-			}
+			},
+			"googleServicesFile": "./google-services-ios.plist"
 		},
 		"android": {
 			"adaptiveIcon": {
@@ -24,7 +25,8 @@
 			},
 			"edgeToEdgeEnabled": true,
 			"predictiveBackGestureEnabled": false,
-			"package": "de.florian.erwerth.smoqui"
+			"package": "de.florian.erwerth.smoqui",
+			"googleServicesFile": "./google-services-android.json"
 		},
 		"plugins": [
 			"expo-router",
@@ -40,7 +42,8 @@
 					"imageWidth": 200
 				}
 			],
-			"expo-font"
+			"expo-font",
+			"expo-notifications"
 		],
 		"experiments": {
 			"typedRoutes": true,
@@ -49,7 +52,7 @@
 		"extra": {
 			"router": {},
 			"eas": {
-				"projectId": "6f8a6528-1350-4104-b97c-5f2d52150304"
+				"projectId": "e9d7574a-5f98-4617-b71b-22766e675286"
 			}
 		},
 		"owner": "florian_erwerth"

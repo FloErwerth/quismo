@@ -1,37 +1,16 @@
-import { BellRing } from "@tamagui/lucide-icons";
 import { StyleSheet } from "react-native";
-import Animated, {
-	interpolate,
-	type SharedValue,
-	useAnimatedStyle,
-} from "react-native-reanimated";
 import { Image, SizableText, XStack } from "tamagui";
 import { StepperPage } from "@/components/Stepper/StepperPage";
 import { TextBubble } from "@/components/TextBubble";
 import { Button } from "@/components/tamagui/Button";
-
-function RightAction(prog: SharedValue<number>) {
-	const style = useAnimatedStyle(() => {
-		return {
-			// Customize animation based on swipe progress
-			opacity: prog.value,
-			transform: [
-				{ scale: interpolate(prog.value, [0, 0.9, 1], [1, 1, 1.15]) },
-			],
-		};
-	});
-	return (
-		<Animated.View style={[styles.rightAction, style]}>
-			<BellRing size="$1" />
-		</Animated.View>
-	);
-}
+import { registerForPushNotificationsAsync } from "@/notifications/registerForNotifications";
+import { useStoreSelector } from "@/storage/storage";
 
 export const OnboardingNotificationsPage = () => {
-	const onSwipeableLeftOpen = () => {
-		alert("Swiped left action triggered!");
-	};
-
+	const checkInTime = useStoreSelector((state) => state.checkInTime);
+	const updateNotificationsEnabled = useStoreSelector(
+		(state) => state.updateNotificationsEnabled,
+	);
 	return (
 		<StepperPage>
 			<XStack gap="$2">
@@ -51,6 +30,11 @@ export const OnboardingNotificationsPage = () => {
 				Du deine Benachrichtigungen aktivieren.
 			</SizableText>
 			<Button.Floating
+				onPress={async () => {
+					await registerForPushNotificationsAsync();
+					updateNotificationsEnabled(true);
+				}}
+				pressStyle={{ scale: 0.9 }}
 				size="$8"
 				floatingProps={{
 					showShadow: false,

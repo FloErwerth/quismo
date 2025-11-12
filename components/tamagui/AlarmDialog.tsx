@@ -33,7 +33,7 @@ export const AlarmDialog = ({
 	return (
 		<Dialog {...props}>
 			{props.children}
-			<XStack gap="$4">
+			<XStack gap="$4" marginTop="$4">
 				<Button onPress={handleConfirm} variant="secondary" flex={1}>
 					{confirmButtonLabel || t("common.confirm")}
 				</Button>

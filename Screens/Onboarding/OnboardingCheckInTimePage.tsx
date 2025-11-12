@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Platform } from "react-native";
 import { SizableText, View } from "tamagui";
 import { DateTimePickerDialog } from "@/components/DateTimePicker/DatePickerDialog";
+import { DateTimePicker } from "@/components/DateTimePicker/DateTimePicker";
 import { StepperPage } from "@/components/Stepper/StepperPage";
 import { Button } from "@/components/tamagui/Button";
 import { useStoreSelector } from "@/storage/storage";
@@ -11,6 +13,7 @@ export const OnboardingCheckInTimePage = () => {
 	const updateCheckInTime = useStoreSelector(
 		(state) => state.updateCheckInTime,
 	);
+
 	const checkInTime = useStoreSelector((state) => state.checkInTime);
 	return (
 		<StepperPage
@@ -32,7 +35,9 @@ export const OnboardingCheckInTimePage = () => {
 				</Button>
 				{checkInTime && (
 					<Button
-						onPress={() => updateCheckInTime(undefined)}
+						onPress={async () => {
+							updateCheckInTime(undefined);
+						}}
 						size="$5"
 						variant="ghost"
 						alignSelf="flex-end"
@@ -41,21 +46,31 @@ export const OnboardingCheckInTimePage = () => {
 					</Button>
 				)}
 			</View>
-			<DateTimePickerDialog
-				dialogProps={{ open, onOpenChange: setOpen }}
-				pickerProps={{
-					mode: "time",
-					display: "default",
-					onDateChange: (date) => {
-						updateCheckInTime(date);
-					},
-					style: {
-						width: "100%",
-						height: 100,
-					},
-					value: new Date(checkInTime ?? new Date()),
-				}}
-			/>
+			{Platform.OS === "android" ? (
+				<DateTimePicker
+					open={open}
+					onOpenChange={setOpen}
+					mode="time"
+					value={new Date(checkInTime ?? new Date())}
+					onChange={(_, date) => updateCheckInTime(date)}
+				/>
+			) : (
+				<DateTimePickerDialog
+					dialogProps={{ open, onOpenChange: setOpen }}
+					pickerProps={{
+						mode: "time",
+						display: "default",
+						onDateChange: (date) => {
+							updateCheckInTime(date);
+						},
+						style: {
+							width: "100%",
+							height: 100,
+						},
+						value: new Date(checkInTime ?? new Date()),
+					}}
+				/>
+			)}
 		</StepperPage>
 	);
 };

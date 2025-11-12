@@ -2,6 +2,7 @@ import {
 	type DialogProps,
 	SizableText,
 	Dialog as TamaguiDialog,
+	useWindowDimensions,
 	View,
 } from "tamagui";
 
@@ -16,6 +17,7 @@ export const Dialog = ({
 	title?: string;
 	onAfterCloseAnimation?: () => void;
 }) => {
+	const { width: screenWidth } = useWindowDimensions();
 	const handleOverlayPress = () => {
 		if (dismissOnOverlayPress) {
 			props.onOpenChange?.(false);
@@ -45,6 +47,7 @@ export const Dialog = ({
 					margin="$4"
 					borderRadius="$6"
 					key="content"
+					width={screenWidth - 32}
 					animateOnly={["transform", "opacity"]}
 					animation={[
 						"quicker",

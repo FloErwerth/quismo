@@ -24,6 +24,8 @@ export type StoreValues = {
 	// motivation
 	motivation: Motivation | undefined;
 	concerns: Concern[];
+	// notifications
+	notificationsEnabled: boolean;
 };
 
 const initialState: StoreValues = {
@@ -41,6 +43,7 @@ const initialState: StoreValues = {
 	concerns: [],
 	checkIns: [],
 	hasSeenWelcomeDialog: false,
+	notificationsEnabled: false,
 } as const;
 
 type StoreActions = {
@@ -67,6 +70,8 @@ type StoreActions = {
 	resetMotivationsStorage: () => void;
 	addConcern: (concern: Concern) => void;
 	removeConcern: (concernId: Concern) => void;
+	// notifications
+	updateNotificationsEnabled: (notificationsEnabled: boolean) => void;
 	// general
 	resetStore: () => void;
 };
@@ -127,6 +132,10 @@ export const useStore = create(
 			updateHasSeenWelcomeDialog: (hasSeenWelcomeDialog: boolean) =>
 				set((state) => {
 					state.hasSeenWelcomeDialog = hasSeenWelcomeDialog;
+				}),
+			updateNotificationsEnabled: (notificationsEnabled: boolean) =>
+				set((state) => {
+					state.notificationsEnabled = notificationsEnabled;
 				}),
 			resetStore: () =>
 				set(() => {

@@ -18,7 +18,7 @@ const MAX_PANNING_DISTANCE_Y = 6;
 
 const OPEN_ANIMATION_DURATION = 300;
 
-const DEFAULT_SPRING_CONFIG = { damping: 80, stiffness: 1200 } as const;
+const DEFAULT_SPRING_CONFIG = { damping: 80, stiffness: 1000 } as const;
 
 export const MainFunctionContextMenu = () => {
 	const distanceX = useSharedValue(0);
@@ -158,13 +158,12 @@ export const MainFunctionContextMenu = () => {
 									>
 										<View flexDirection="row" gap="$4" flex={1}>
 											<Card
+												animation="bouncy"
 												onPress={() => {
 													router.push("/checkIn");
 													setTimeout(() => closeContextMenu(), 500);
 												}}
 												pressStyle={{ scale: 0.9 }}
-												animation="bouncy"
-												enterStyle={{ scale: 0.7 }}
 												backgroundColor="$blue4Light"
 												flex={1}
 												alignItems="center"
@@ -175,7 +174,7 @@ export const MainFunctionContextMenu = () => {
 											</Card>
 											<Card
 												animation="bouncy"
-												enterStyle={{ scale: 0.7 }}
+												pressStyle={{ scale: 0.9 }}
 												backgroundColor="$blue4Light"
 												flex={1}
 												alignItems="center"

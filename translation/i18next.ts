@@ -18,7 +18,6 @@ i18next.use(initReactI18next).init({
 	defaultNS,
 	lng: getDeviceLanguage(),
 	fallbackLng: "de",
-	debug: __DEV__,
 	interpolation: {
 		escapeValue: false,
 	},
