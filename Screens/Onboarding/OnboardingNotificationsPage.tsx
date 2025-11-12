@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { Image, SizableText, XStack } from "tamagui";
 import { StepperPage } from "@/components/Stepper/StepperPage";
 import { TextBubble } from "@/components/TextBubble";
@@ -7,7 +6,6 @@ import { registerForPushNotificationsAsync } from "@/notifications/registerForNo
 import { useStoreSelector } from "@/storage/storage";
 
 export const OnboardingNotificationsPage = () => {
-	const checkInTime = useStoreSelector((state) => state.checkInTime);
 	const updateNotificationsEnabled = useStoreSelector(
 		(state) => state.updateNotificationsEnabled,
 	);
@@ -50,17 +48,3 @@ export const OnboardingNotificationsPage = () => {
 		</StepperPage>
 	);
 };
-const styles = StyleSheet.create({
-	rightAction: {
-		width: 50,
-		height: 50,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	swipeable: {
-		height: 50,
-		backgroundColor: "papayawhip",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-});

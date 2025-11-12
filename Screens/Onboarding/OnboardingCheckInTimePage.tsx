@@ -10,6 +10,7 @@ import { formatTime } from "@/utils/date";
 
 export const OnboardingCheckInTimePage = () => {
 	const [open, setOpen] = useState(false);
+
 	const updateCheckInTime = useStoreSelector(
 		(state) => state.updateCheckInTime,
 	);

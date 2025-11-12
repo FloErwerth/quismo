@@ -11,7 +11,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "react-native";
 import { GradientBackground } from "@/components/Backgrounds/GradientBackground";
-import { useScheduleCheckInNotificationUponAppStart } from "@/notifications/checkInNotifications";
+import { useHandleCheckInNotificationDeepLink } from "@/notifications/checkInNotifications";
 import { Providers } from "@/providers";
 import { useStoreSelector } from "@/storage/storage";
 
@@ -23,10 +23,10 @@ SplashScreen.setOptions({
 SplashScreen.preventAutoHideAsync();
 
 const AppStack = () => {
+	useHandleCheckInNotificationDeepLink();
 	const onboardingCompleted = useStoreSelector(
 		(state) => state.onboardingCompleted,
 	);
-	useScheduleCheckInNotificationUponAppStart();
 
 	return (
 		<Stack

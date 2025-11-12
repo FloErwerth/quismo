@@ -11,6 +11,7 @@ import { Circle, SizableText, View, XStack } from "tamagui";
 import { FloatingView } from "@/components/FloatingView";
 import { StepperPage } from "@/components/Stepper/StepperPage";
 import { Card } from "@/components/tamagui/Card";
+import { useLeaveOnboarding } from "@/Screens/Onboarding/useLeaveOnboarding";
 import { useStoreSelector } from "@/storage/storage";
 
 const useOfferings = () => {
@@ -28,9 +29,7 @@ const useOfferings = () => {
 };
 
 export const OnboardingPaywall = () => {
-	const completeOnboarding = useStoreSelector(
-		(state) => state.completeOnboarding,
-	);
+	const leaveOnboarding = useLeaveOnboarding();
 	const { offerings, purchageOffering } = useOfferings();
 	const [selectedPackage, setSelectedPackage] = useState<PurchasesPackage>();
 
@@ -83,7 +82,7 @@ export const OnboardingPaywall = () => {
 				if (selectedPackage) {
 					await purchageOffering(selectedPackage);
 				}
-				completeOnboarding();
+				leaveOnboarding();
 			}}
 			bubbleTextConfig={{
 				imageConfig: {

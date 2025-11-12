@@ -19,6 +19,7 @@ import { TextBubble } from "@/components/TextBubble";
 import { AlarmDialog } from "@/components/tamagui/AlarmDialog";
 import { Button } from "@/components/tamagui/Button";
 import { Card } from "@/components/tamagui/Card";
+import { Input } from "@/components/tamagui/Input";
 import { OnboardingInput } from "@/Screens/Onboarding/components/OnboardingInput";
 import { useStoreSelector } from "@/storage/storage";
 
@@ -202,7 +203,7 @@ const CheckInSmokeStatusResultPage = () => {
 						setShowAddReasonModal(false);
 					}}
 				>
-					<OnboardingInput
+					<Input
 						multiline
 						autoFocus
 						numberOfLines={4}
@@ -363,17 +364,9 @@ const CheckInConfidencePage = () => {
 };
 
 const FirstCheckIn = () => {
-	const hasSeenWelcomeDialog = useStoreSelector(
-		(state) => state.hasSeenWelcomeDialog,
+	const updateHasSeenCheckInIntroduction = useStoreSelector(
+		(state) => state.updateHasSeenCheckInIntroduction,
 	);
-
-	const updateHasSeenWelcomeDialog = useStoreSelector(
-		(state) => state.updateHasSeenWelcomeDialog,
-	);
-
-	if (hasSeenWelcomeDialog) {
-		return null;
-	}
 
 	return (
 		<View
@@ -418,7 +411,7 @@ const FirstCheckIn = () => {
 				<Button
 					size="$8"
 					onPress={() => {
-						updateHasSeenWelcomeDialog(true);
+						updateHasSeenCheckInIntroduction(true);
 					}}
 				>
 					Check-In starten
@@ -429,17 +422,14 @@ const FirstCheckIn = () => {
 };
 
 export default function CheckIn() {
-	const hasSeenWelcomeDialog = useStoreSelector(
-		(state) => state.hasSeenWelcomeDialog,
-	);
-	const updateHasSeenWelcomeDialog = useStoreSelector(
-		(state) => state.updateHasSeenWelcomeDialog,
+	const hasSeenCheckInIntroduction = useStoreSelector(
+		(state) => state.hasSeenCheckInIntroduction,
 	);
 
 	return (
 		<GradientBackground>
 			<AnimatePresence>
-				{!hasSeenWelcomeDialog && <FirstCheckIn />}
+				{!hasSeenCheckInIntroduction && <FirstCheckIn />}
 			</AnimatePresence>
 			<CheckInProvider>
 				<Stepper>
@@ -450,14 +440,6 @@ export default function CheckIn() {
 					<CheckInConfidencePage />
 				</Stepper>
 			</CheckInProvider>
-			<Button
-				onPress={() => {
-					updateHasSeenWelcomeDialog(false);
-				}}
-				size="$8"
-			>
-				reset
-			</Button>
 		</GradientBackground>
 	);
 }

@@ -6,7 +6,7 @@ import {
 	scheduleNotificationAsync,
 } from "expo-notifications";
 import { useCallback, useEffect } from "react";
-import { AppState, type AppStateStatus, Linking } from "react-native";
+import { Linking } from "react-native";
 import { isNotificationPermissionGranted } from "@/notifications/notificationPermission";
 import { useStoreSelector } from "@/storage/storage";
 
@@ -61,48 +61,28 @@ export const useHandleCheckInNotificationDeepLink = async () => {
 	);
 
 	useEffect(() => {
-		console.log("useHandleCheckInNotificationDeepLink");
-		const subscription = Notifications.addNotificationResponseReceivedListener(
-			(notification) => {
-				console.log("Notification received:", notification);
-				handleDeepLink(notification);
-			},
-		);
+		const subscription =
+			Notifications.addNotificationResponseReceivedListener(handleDeepLink);
 		return () => subscription.remove();
 	}, [handleDeepLink]);
 };
 
-export const useScheduleCheckInNotificationUponAppStart = () => {
-	useHandleCheckInNotificationDeepLink();
+export const useScheduleCheckInNotification = () => {
 	const checkInTime = useStoreSelector((state) => state.checkInTime);
-	const onboardingCompleted = useStoreSelector(
-		(state) => state.onboardingCompleted,
-	);
 	const notificationsEnabled = useStoreSelector(
 		(state) => state.notificationsEnabled,
 	);
 
-	const cancelOrScheduleCheckInNotification = useCallback(
-		(state: AppStateStatus) => {
-			if (!checkInTime || !onboardingCompleted || !notificationsEnabled) {
-				return;
-			}
-			if (state === "active") {
-				cancelCheckInNotification().catch(console.error);
-			} else {
-				scheduleCheckInNotification(checkInTime).catch(console.error);
-			}
-		},
-		[checkInTime, onboardingCompleted, notificationsEnabled],
-	);
+	return async () => {
+		if (!notificationsEnabled) {
+			return;
+		}
 
-	useEffect(() => {
-		const subscription = AppState.addEventListener(
-			"change",
-			cancelOrScheduleCheckInNotification,
-		);
-		return () => {
-			subscription.remove();
-		};
-	}, [cancelOrScheduleCheckInNotification]);
+		try {
+			await cancelCheckInNotification();
+			await scheduleCheckInNotification(checkInTime);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 };

@@ -7,12 +7,22 @@ import { useStoreSelector } from "@/storage/storage";
 export default function Settings() {
 	const { t } = useTranslation();
 	const resetOnboarding = useStoreSelector((state) => state.resetAccount);
-
+	const updateHasSeenWelcomeDialog = useStoreSelector(
+		(state) => state.updateHasSeenCheckInIntroduction,
+	);
 	return (
 		<ScrollableScreen>
 			<SizableText>{t("tabs.settings")}</SizableText>
 			<Button onPress={() => resetOnboarding(false)}>
 				Account zurücksetzen (Abo wird nicht beendet)
+			</Button>
+			<Button
+				onPress={() => {
+					updateHasSeenWelcomeDialog(false);
+				}}
+				size="$8"
+			>
+				reset welcome dialog
 			</Button>
 		</ScrollableScreen>
 	);

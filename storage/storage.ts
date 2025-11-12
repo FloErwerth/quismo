@@ -20,7 +20,7 @@ export type StoreValues = {
 	didShowPreperationModal: boolean;
 	// check ins
 	checkIns: { date: Date }[];
-	hasSeenWelcomeDialog: boolean;
+	hasSeenCheckInIntroduction: boolean;
 	// motivation
 	motivation: Motivation | undefined;
 	concerns: Concern[];
@@ -42,7 +42,7 @@ const initialState: StoreValues = {
 	motivation: undefined,
 	concerns: [],
 	checkIns: [],
-	hasSeenWelcomeDialog: false,
+	hasSeenCheckInIntroduction: false,
 	notificationsEnabled: false,
 } as const;
 
@@ -60,7 +60,9 @@ type StoreActions = {
 	updateCurrency: (currency: Currency) => void;
 	updateYearsSmoking: (yearsSmoking: string | undefined) => void;
 	updateDidShowPreperationModal: (didShowPreperationModal: boolean) => void;
-	updateHasSeenWelcomeDialog: (hasSeenWelcomeDialog: boolean) => void;
+	updateHasSeenCheckInIntroduction: (
+		hasSeenCheckInIntroduction: boolean,
+	) => void;
 	// check ins
 	addCheckIn: (checkIn: { date: Date }) => void;
 	removeCheckIn: (checkIn: { date: Date }) => void;
@@ -88,7 +90,7 @@ export const useStore = create(
 				set((state) => {
 					const newState: StoreValues = {
 						...initialState,
-						hasSeenWelcomeDialog: state.hasSeenWelcomeDialog,
+						hasSeenCheckInIntroduction: state.hasSeenCheckInIntroduction,
 					};
 					if (_keepCheckIns) {
 						newState.checkIns = state.checkIns;
@@ -129,9 +131,9 @@ export const useStore = create(
 				set((state) => {
 					state.didShowPreperationModal = didShowPreperationModal;
 				}),
-			updateHasSeenWelcomeDialog: (hasSeenWelcomeDialog: boolean) =>
+			updateHasSeenCheckInIntroduction: (hasSeenCheckInIntroduction: boolean) =>
 				set((state) => {
-					state.hasSeenWelcomeDialog = hasSeenWelcomeDialog;
+					state.hasSeenCheckInIntroduction = hasSeenCheckInIntroduction;
 				}),
 			updateNotificationsEnabled: (notificationsEnabled: boolean) =>
 				set((state) => {
