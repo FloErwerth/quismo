@@ -1,11 +1,13 @@
-import { Bell } from "@tamagui/lucide-icons";
+import { Bell, CheckCircle2 } from "@tamagui/lucide-icons";
 import { Image } from "expo-image";
 import type { TFunction } from "i18next";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable } from "react-native";
 import { SizableText, View, XStack } from "tamagui";
 import { ScrollableScreen } from "@/components/Screens/ScrollableScreen";
 import { Button } from "@/components/tamagui/Button";
+import { SelectableCard } from "@/components/tamagui/Card/variants";
 import { useStore } from "@/storage/storage";
 
 const getGreetingByTime = (t: TFunction) => {
@@ -22,6 +24,7 @@ const getGreetingByTime = (t: TFunction) => {
 export const HomeScreen = () => {
 	const name = useStore((state) => state.name);
 	const { t } = useTranslation();
+	const [isSelected, setIsSelected] = useState(false);
 
 	return (
 		<ScrollableScreen>
@@ -50,6 +53,13 @@ export const HomeScreen = () => {
 					</Pressable>
 				</Button>
 			</XStack>
+			<SelectableCard
+				selected={isSelected}
+				title="Entzugserscheinungen"
+				description="Entzugserscheinungen sind beim Rauchen normal und können durch Medikamente oder andere Hilfsmittel behandelt werden."
+				Icon={CheckCircle2}
+				onPress={() => setIsSelected(!isSelected)}
+			/>
 		</ScrollableScreen>
 	);
 };

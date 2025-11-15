@@ -4,6 +4,7 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RevenueCatProvider } from "@/providers/RevenueCat";
 import { TamaguiProvider } from "./TamaguiProvider";
+import "react-native-random-uuid";
 
 export const Providers = ({ children }: PropsWithChildren) => {
 	return (

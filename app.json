@@ -1,60 +1,61 @@
 {
-	"expo": {
-		"name": "SmoQui",
-		"slug": "smoqui",
-		"version": "0.0.1",
-		"orientation": "portrait",
-		"scheme": "smoqui",
-		"userInterfaceStyle": "automatic",
-		"newArchEnabled": true,
-		"ios": {
-			"icon": "./assets/images/ios-light.png",
-			"bundleIdentifier": "de.florian.erwerth.smoqui",
-			"supportsTablet": false,
-			"infoPlist": {
-				"ITSAppUsesNonExemptEncryption": false
-			},
-			"googleServicesFile": "./google-services-ios.plist"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"backgroundColor": "#E6F4FE",
-				"foregroundImage": "./assets/images/adaptive-icon.png",
-				"backgroundImage": "./assets/images/adaptive-icon.png",
-				"monochromeImage": "./assets/images/adaptive-icon.png"
-			},
-			"edgeToEdgeEnabled": true,
-			"predictiveBackGestureEnabled": false,
-			"package": "de.florian.erwerth.smoqui",
-			"googleServicesFile": "./google-services-android.json"
-		},
-		"plugins": [
-			"expo-router",
-			[
-				"expo-splash-screen",
-				{
-					"backgroundColor": "#ffffff",
-					"image": "./assets/images/splash-icon-light.png",
-					"dark": {
-						"image": "./assets/images/splash-icon-dark.png",
-						"backgroundColor": "#000000"
-					},
-					"imageWidth": 200
-				}
-			],
-			"expo-font",
-			"expo-notifications"
-		],
-		"experiments": {
-			"typedRoutes": true,
-			"reactCompiler": true
-		},
-		"extra": {
-			"router": {},
-			"eas": {
-				"projectId": "e9d7574a-5f98-4617-b71b-22766e675286"
-			}
-		},
-		"owner": "florian_erwerth"
-	}
+  "expo": {
+    "name": "SmoQui",
+    "slug": "smoqui",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "scheme": "smoqui",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "icon": "./assets/images/ios-light.png",
+      "bundleIdentifier": "de.florian.erwerth.smoqui",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "googleServicesFile": "./google-services-ios.plist"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundImage": "./assets/images/adaptive-icon.png",
+        "monochromeImage": "./assets/images/adaptive-icon.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "de.florian.erwerth.smoqui",
+      "googleServicesFile": "./google-services-android.json"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/images/splash-icon-light.png",
+          "dark": {
+            "image": "./assets/images/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
+        }
+      ],
+      "expo-font",
+      "expo-notifications",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e9d7574a-5f98-4617-b71b-22766e675286"
+      }
+    },
+    "owner": "florian_erwerth"
+  }
 }

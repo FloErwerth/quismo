@@ -13,23 +13,19 @@ export const formatTime = (date: Date) => {
 	});
 };
 
-export const getPartialsOfDate = (date: Date | undefined) => {
-	if (date === undefined) {
-		return null;
-	}
+export const getPartialsOfDate = (date: Date) => {
+	const dateWithoutTimezone = new Date(
+		date.getTime() - date.getTimezoneOffset() * 60000,
+	);
+	const split = dateWithoutTimezone.toISOString().split("T");
 
-	const internalDate = new Date(date);
+	return { date: split[0] as `${string}-${string}-${string}`, time: split[1] };
+};
 
-	// return if date is invalid
-	if (
-		internalDate === null ||
-		internalDate === undefined ||
-		internalDate.toString() === "Invalid Date"
-	) {
-		return null;
-	}
+export const getISOStringFromDate = (date: Date) => {
+	return date.toISOString();
+};
 
-	const split = internalDate.toISOString().split("T");
-
-	return { date: split[0], time: split[1] };
+export const getISODateFromToday = () => {
+	return getPartialsOfDate(new Date()).date;
 };

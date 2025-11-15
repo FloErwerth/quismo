@@ -6,6 +6,7 @@ import { useStoreSelector } from "@/storage/storage";
 
 export default function Settings() {
 	const { t } = useTranslation();
+	const state = useStoreSelector((state) => state.checkIns);
 	const resetOnboarding = useStoreSelector((state) => state.resetAccount);
 	const updateHasSeenWelcomeDialog = useStoreSelector(
 		(state) => state.updateHasSeenCheckInIntroduction,
@@ -24,6 +25,7 @@ export default function Settings() {
 			>
 				reset welcome dialog
 			</Button>
+			<Button onPress={() => console.log(state)}>Log Store</Button>
 		</ScrollableScreen>
 	);
 }

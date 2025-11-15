@@ -10,6 +10,7 @@ import Animated, {
 	withSpring,
 	withTiming,
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 import { AnimatePresence, Card, SizableText, View } from "tamagui";
 import { FloatingView } from "@/components/FloatingView";
 
@@ -42,51 +43,6 @@ export const MainFunctionContextMenu = () => {
 			bottom: bottomClose.value,
 			transform: [{ scale: bottomScale.value }],
 			opacity: bottomOpacity.value,
-		};
-	});
-
-	const pan = Gesture.Pan()
-		.onBegin(() => {
-			distanceX.value = withSpring(0);
-			distanceY.value = withSpring(0);
-			scale.value = withSpring(0.9);
-		})
-		.onChange((event) => {
-			const isDistanceXSmallerThanMaxValue =
-				Math.abs(distanceX.value) <= MAX_PANNING_DISTANCE_X;
-			const isDistanceYSmallerThanMaxValue =
-				Math.abs(distanceY.value) <= MAX_PANNING_DISTANCE_Y;
-
-			if (isDistanceXSmallerThanMaxValue) {
-				distanceX.value = withSpring(distanceX.value + event.changeX);
-			}
-			if (isDistanceYSmallerThanMaxValue) {
-				distanceY.value = withSpring(distanceY.value + event.changeY);
-			}
-		})
-		.onTouchesUp(() => {
-			distanceX.value = withSpring(0);
-			distanceY.value = withSpring(0);
-			scale.value = withSpring(1);
-		});
-
-	const animatedStyle = useAnimatedStyle(() => {
-		return {
-			transform: [
-				{ translateX: distanceX.value },
-				{ translateY: distanceY.value },
-				{ scale: scale.value },
-			],
-		};
-	});
-
-	const buttonStyle = useAnimatedStyle(() => {
-		return {
-			height: height.value,
-			width: width.value,
-			bottom: bottom.value,
-			left: left.value,
-			borderRadius: borderRadius.value,
 		};
 	});
 
@@ -124,10 +80,55 @@ export const MainFunctionContextMenu = () => {
 		resetCloseButton();
 	};
 
+	const pan = Gesture.Pan()
+		.onBegin(() => {
+			distanceX.value = withSpring(0);
+			distanceY.value = withSpring(0);
+			scale.value = withSpring(0.9);
+		})
+		.onChange((event) => {
+			const isDistanceXSmallerThanMaxValue =
+				Math.abs(distanceX.value) <= MAX_PANNING_DISTANCE_X;
+			const isDistanceYSmallerThanMaxValue =
+				Math.abs(distanceY.value) <= MAX_PANNING_DISTANCE_Y;
+
+			if (isDistanceXSmallerThanMaxValue) {
+				distanceX.value = withSpring(distanceX.value + event.changeX);
+			}
+			if (isDistanceYSmallerThanMaxValue) {
+				distanceY.value = withSpring(distanceY.value + event.changeY);
+			}
+		})
+		.onTouchesUp(() => {
+			distanceX.value = withSpring(0);
+			distanceY.value = withSpring(0);
+			scale.value = withSpring(1);
+			scheduleOnRN(openContextMenu);
+		});
+
+	const animatedStyle = useAnimatedStyle(() => {
+		return {
+			transform: [
+				{ translateX: distanceX.value },
+				{ translateY: distanceY.value },
+				{ scale: scale.value },
+			],
+		};
+	});
+
+	const buttonStyle = useAnimatedStyle(() => {
+		return {
+			height: height.value,
+			width: width.value,
+			bottom: bottom.value,
+			left: left.value,
+			borderRadius: borderRadius.value,
+		};
+	});
+
 	return (
 		<GestureDetector gesture={pan.enabled(!isContextMenuOpen)}>
 			<View
-				onPress={openContextMenu}
 				alignSelf="center"
 				animation="superBouncy"
 				position="absolute"
@@ -148,8 +149,8 @@ export const MainFunctionContextMenu = () => {
 										animation="100ms"
 										gap="$4"
 										padding="$4"
-										enterStyle={{ opacity: 0, animationDuration: 100 }}
-										exitStyle={{ opacity: 0, animationDuration: 100 }}
+										enterStyle={{ opacity: 0 }}
+										exitStyle={{ opacity: 0 }}
 										backgroundColor="$background"
 										width="95%"
 										zIndex={1}

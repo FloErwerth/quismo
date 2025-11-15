@@ -2,9 +2,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+import type { CheckIn } from "@/config/checkin";
 import type { Currency } from "@/config/currencies";
 import type { Concern, Motivation } from "@/config/motivationAndConcerns";
 import { createSelectors } from "@/storage/utils";
+import { getISODateFromToday } from "@/utils/date";
 
 export type StoreValues = {
 	// onboarding
@@ -19,7 +21,7 @@ export type StoreValues = {
 	// preperation
 	didShowPreperationModal: boolean;
 	// check ins
-	checkIns: { date: Date }[];
+	checkIns: Record<string, CheckIn>;
 	hasSeenCheckInIntroduction: boolean;
 	// motivation
 	motivation: Motivation | undefined;
@@ -41,7 +43,7 @@ const initialState: StoreValues = {
 	currency: undefined,
 	motivation: undefined,
 	concerns: [],
-	checkIns: [],
+	checkIns: {} as Record<string, CheckIn>,
 	hasSeenCheckInIntroduction: false,
 	notificationsEnabled: false,
 } as const;
@@ -64,8 +66,8 @@ type StoreActions = {
 		hasSeenCheckInIntroduction: boolean,
 	) => void;
 	// check ins
-	addCheckIn: (checkIn: { date: Date }) => void;
-	removeCheckIn: (checkIn: { date: Date }) => void;
+	updateCheckIn: (checkIn: CheckIn, isoDate?: string) => void;
+	removeCheckIn: (isoDate: string) => void;
 	// motivation
 	addMotivation: (motivation: Motivation) => void;
 	removeMotivation: (motivationId: Motivation) => void;
@@ -143,13 +145,17 @@ export const useStore = create(
 				set(() => {
 					return store.getInitialState();
 				}),
-			addCheckIn: (checkIn: { date: Date }) =>
+			updateCheckIn: (checkIn: CheckIn, isoDate = getISODateFromToday()) =>
 				set((state) => {
-					state.checkIns.push(checkIn);
+					const savedCheckIn = state.checkIns[isoDate];
+					state.checkIns[isoDate] = {
+						...(savedCheckIn ?? {}),
+						...checkIn,
+					};
 				}),
-			removeCheckIn: (checkIn: { date: Date }) =>
+			removeCheckIn: (isoDate = getISODateFromToday()) =>
 				set((state) => {
-					state.checkIns.splice(state.checkIns.indexOf(checkIn), 1);
+					delete state.checkIns[isoDate];
 				}),
 
 			// motivation
