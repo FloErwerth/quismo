@@ -1,3 +1,5 @@
+import { CheckInSmokedReasons } from "@/config/checkin";
+
 export default {
 	common: {
 		appName: "SmoQui",
@@ -5,8 +7,10 @@ export default {
 		previous: "Zurück",
 		confirm: "Bestätigen",
 		cancel: "Abbrechen",
+		skip: "Überspringen",
 		name: "Name",
 		terms: "Nutzungsbedingungen",
+		or: "Oder",
 	},
 	tabs: {
 		home: "Home",
@@ -101,6 +105,113 @@ export default {
 			startJourneyLabel:
 				"Wenn Du bereit bist, dann starte jetzt Deinen Weg in ein rauchfreies Leben",
 			startJourneyButton: "Ich möchte mit dem Rauchen aufhören",
+		},
+	},
+	checkIn: {
+		done: "Check-In abschließen",
+		introduction: {
+			title: "Willkommen zu deinem ersten Check-In!",
+			description:
+				"Bei einem Check-In wird dein aktueller Rauchstatus, deine Gefühlslage und deine Zuversicht abgefragt. Dies dient der Selbstreflextion und Hilft Dir beim Rauchstopp",
+			description2:
+				"Deine Check-Ins kannst Du in deinem Kalender aufrufen und die Auswertung ansehen.",
+			description3:
+				"Wenn Du bereit bist, dann starte jetzt Deinen ersten Check-In",
+			startButton: "Check-In starten",
+		},
+		smokeStatusResult: {
+			yes: {
+				motivation: {
+					title: "Rückfälle sind normal!",
+					description:
+						"Das Aufhören mit dem Rauchen ist sehr schwierig, daher sind mit Rückfällen zu rechnen.",
+					description2:
+						"Wichtig ist nur daraus zu lernen! Das kannst Du tun, indem Du darüber reflektierst, was dazu geführt hat, dass Du wieder rauchst.",
+					description3:
+						"Auf der nächsten Seite hast Du die Möglichkeit Gründe für deinen Rückfall auszuwählen",
+				},
+				explainReason: {
+					title: "Warum hast Du {{reason}} gewählt?",
+					placeholder: "Weil ich...",
+					skipButtonText: "Das möchte ich nicht erklären",
+				},
+				title: "Warum hast Du geraucht?",
+				description:
+					"Überlege nun warum Du einen Rückfall gehabt haben könntest. Wähle dazu einen der folgenden Gründe aus, der am besten zutrifft:",
+
+				chooseReason: "Trage einen Grund ein",
+				adjustReason: "Eigenen Grund anpassen",
+				deleteReason: "Eigenen Grund löschen",
+				reasons: {
+					[CheckInSmokedReasons.DETOXIFICATION]: "Entzug",
+					[CheckInSmokedReasons.EMOTIONAL_STRESS]: "Emotionale Belastung",
+					[CheckInSmokedReasons.HABITS]: "Gewohnheiten",
+					[CheckInSmokedReasons.SOCIAL_EVENTS]: "Soziale Ereignisse",
+					[CheckInSmokedReasons.TOO_SECURE]: "Überschätzung",
+					[CheckInSmokedReasons.OTHER]: "Anderer Grund",
+					[CheckInSmokedReasons.DISTRACTION]: "Ablenkung",
+					[CheckInSmokedReasons.SUPPORT]: "Unterstützung",
+					[CheckInSmokedReasons.BREATHING_EXERCISES]: "Atemübungen",
+					[CheckInSmokedReasons.DRUGS]: "Medikamente",
+				},
+			},
+			no: {
+				title: "Super!",
+				description:
+					"Du hast nicht geraucht und das ist fantastisch! Du machst den richtigen Schritt und verhinderst damit womöglich, dass weitere negative Erfahrungen passieren.",
+			},
+		},
+		didNotSmoke: {
+			congratulate: {
+				title: "Herzlichen Glückwunsch!",
+				description:
+					"Du hast nicht geraucht und das ist absolut fantastisch! Du machst unglaubliche Fortschritte auf deinem Weg zu einem rauchfreien Leben.",
+				motivation:
+					"Jeder Moment, in dem Du dem Verlangen zu rauchen widerstehst, ist ein Sieg. Du baust mit jedem rauchfreien Tag Stärke und Widerstandsfähigkeit auf. Mach weiter so - Du machst das großartig!",
+			},
+		},
+		smokeStatus: {
+			title: "Hast Du geraucht?",
+			sinceLastCheckInTitle: "Hast Du seit deinem letzten Check-In geraucht?",
+			yesTitle: "Ja",
+			noTitle: "Nein",
+			yesDescription: "Ja ich habe eine oder mehrere Zigaretten geraucht",
+			noDescription: "Nein ich habe keine Zigaretten geraucht",
+		},
+		feelings: {
+			title: "Wie fühlst Du dich nun?",
+			description:
+				"Wähle das Emoji aus, das am besten beschreibt, wie Du dich gerade fühlst:",
+			STRESSED: "Gestresst",
+			HAPPY: "Glücklich",
+			NEUTRAL: "Neutral",
+			SAD: "Unglücklich",
+			ANGRY: "Wütend",
+			why: {
+				title: "Warum fühlst Du dich {{feeling}}?",
+				placeholder: "Weil ich...",
+				skipButtonText: "Das möchte ich nicht erklären",
+			},
+		},
+		confidence: {
+			title: "Wie zuversichtlich bist Du nun?",
+			description:
+				"Nutze den Slider, um SmoQui zu sagen, wie zuversichtlich Du bist, dass Du bis zum nächsten Check-In nicht rauchst",
+			label: "Zuversichtlichkeit",
+		},
+		nextCheckIn: {
+			smoked: {
+				title: "Gut gemacht, dass Du deinen Check-In abgeschlossen hast!",
+				description:
+					"Du hast einen wichtigen Schritt gemacht, indem Du über deine Reise reflektiert hast. Denke daran, dass jeder Check-In Fortschritt bedeutet, auch wenn die Dinge nicht wie geplant laufen.",
+				regressionPositive:
+					"Rückfälle sind ein normaler Teil des Aufhörprozesses. Das Wichtigste ist, dass Du aus jeder Erfahrung lernst und weiter vorankommst. Mach weiter - Du schaffst das!",
+			},
+			notSmoked: {
+				title: "Herzlichen Glückwunsch zum Abschluss deines Check-Ins!",
+				description:
+					"Du hast deinen Check-In erfolgreich abgeschlossen und bist rauchfrei geblieben! Das ist eine großartige Leistung. Mach weiter so und denke daran, dass jeder rauchfreie Tag ein Sieg ist, den es zu feiern gilt.",
+			},
 		},
 	},
 	motivation: {

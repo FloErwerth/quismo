@@ -6,7 +6,12 @@ import type { CheckIn } from "@/config/checkin";
 import type { Currency } from "@/config/currencies";
 import type { Concern, Motivation } from "@/config/motivationAndConcerns";
 import { createSelectors } from "@/storage/utils";
-import { getISODateFromToday } from "@/utils/date";
+
+type StoredNotification = {
+	timestamp: number;
+	title: string;
+	description: string;
+};
 
 export type StoreValues = {
 	// onboarding
@@ -21,13 +26,14 @@ export type StoreValues = {
 	// preperation
 	didShowPreperationModal: boolean;
 	// check ins
-	checkIns: Record<string, CheckIn>;
+	checkIns: Record<number, CheckIn>;
 	hasSeenCheckInIntroduction: boolean;
 	// motivation
 	motivation: Motivation | undefined;
 	concerns: Concern[];
 	// notifications
 	notificationsEnabled: boolean;
+	storedNotifications: StoredNotification[];
 };
 
 const initialState: StoreValues = {
@@ -43,9 +49,10 @@ const initialState: StoreValues = {
 	currency: undefined,
 	motivation: undefined,
 	concerns: [],
-	checkIns: {} as Record<string, CheckIn>,
+	checkIns: {},
 	hasSeenCheckInIntroduction: false,
 	notificationsEnabled: false,
+	storedNotifications: [],
 } as const;
 
 type StoreActions = {
@@ -66,8 +73,8 @@ type StoreActions = {
 		hasSeenCheckInIntroduction: boolean,
 	) => void;
 	// check ins
-	updateCheckIn: (checkIn: CheckIn, isoDate?: string) => void;
-	removeCheckIn: (isoDate: string) => void;
+	updateCheckIn: (timeStamp: number, checkInProperty: Partial<CheckIn>) => void;
+	removeCheckIn: (timestamp: number) => void;
 	// motivation
 	addMotivation: (motivation: Motivation) => void;
 	removeMotivation: (motivationId: Motivation) => void;
@@ -76,6 +83,8 @@ type StoreActions = {
 	removeConcern: (concernId: Concern) => void;
 	// notifications
 	updateNotificationsEnabled: (notificationsEnabled: boolean) => void;
+	addStoredNotification: (notification: StoredNotification) => void;
+	removeStoredNotification: (timestamp: number) => void;
 	// general
 	resetStore: () => void;
 };
@@ -141,21 +150,31 @@ export const useStore = create(
 				set((state) => {
 					state.notificationsEnabled = notificationsEnabled;
 				}),
+			addStoredNotification: (notification: StoredNotification) =>
+				set((state) => {
+					state.storedNotifications.push(notification);
+				}),
+			removeStoredNotification: (timestamp: number) =>
+				set((state) => {
+					state.storedNotifications = state.storedNotifications.filter(
+						(notification) => notification.timestamp !== timestamp,
+					);
+				}),
 			resetStore: () =>
 				set(() => {
 					return store.getInitialState();
 				}),
-			updateCheckIn: (checkIn: CheckIn, isoDate = getISODateFromToday()) =>
+			updateCheckIn: (timestamp: number, checkInProperty: Partial<CheckIn>) =>
 				set((state) => {
-					const savedCheckIn = state.checkIns[isoDate];
-					state.checkIns[isoDate] = {
+					const savedCheckIn = state.checkIns[timestamp];
+					state.checkIns[timestamp] = {
 						...(savedCheckIn ?? {}),
-						...checkIn,
+						...checkInProperty,
 					};
 				}),
-			removeCheckIn: (isoDate = getISODateFromToday()) =>
+			removeCheckIn: (timestamp: number) =>
 				set((state) => {
-					delete state.checkIns[isoDate];
+					delete state.checkIns[timestamp];
 				}),
 
 			// motivation

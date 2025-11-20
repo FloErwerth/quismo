@@ -1,11 +1,14 @@
-import {
+import React, {
+	Children,
 	createContext,
 	type ReactElement,
+	type ReactNode,
 	useContext,
 	useRef,
 	useState,
 	useTransition,
 } from "react";
+import { filterStepsFromChildren } from "@/components/Stepper/filterStepsFromChildren";
 import type { StepperPageProps } from "@/components/Stepper/StepperPage";
 
 const StepperContext = createContext<
@@ -26,8 +29,25 @@ export const useStepper = () => {
 	return context;
 };
 
+const getChildByDisplayName = (
+	displayName: string,
+	props: { children: ReactElement<StepperPageProps> },
+) => {
+	const child = React.Children.map(
+		props.children,
+		(child: ReactElement<StepperPageProps> | null | undefined) => {
+			// you can access displayName property by child.type.displayName
+			if (child?.type === displayName) {
+				return child;
+			}
+			return null as unknown as ReactElement<StepperPageProps>;
+		},
+	);
+	return child as unknown as ReactElement<StepperPageProps>;
+};
+
 type StepperProps = {
-	children: (ReactElement<StepperPageProps> | null)[];
+	children: ReactNode;
 };
 export const Stepper = ({ children }: StepperProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -47,7 +67,8 @@ export const Stepper = ({ children }: StepperProps) => {
 		setDirection("forward");
 		setTransitioning(() => {
 			setActiveIndex(
-				(activeIndex) => (activeIndex + 1) % Math.max(children?.length, 1),
+				(activeIndex) =>
+					(activeIndex + 1) % Math.max(Children.toArray(children).length, 1),
 			);
 		});
 	};
@@ -69,7 +90,7 @@ export const Stepper = ({ children }: StepperProps) => {
 				direction,
 			}}
 		>
-			{children.filter((child) => child !== null)[activeIndex]}
+			{filterStepsFromChildren(children)[activeIndex]}
 		</StepperContext.Provider>
 	);
 };

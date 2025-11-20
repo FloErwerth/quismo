@@ -24,9 +24,8 @@ export const OnboardingConcernsPage = () => {
 
 	const selectabledItems = Object.values(getConcernOptions(t)).map(
 		(concern) => ({
-			id: concern.id,
+			value: concern.id,
 			label: concern.label,
-			isSelected: concerns.includes(concern.id),
 		}),
 	);
 
@@ -53,7 +52,7 @@ export const OnboardingConcernsPage = () => {
 			<SelectableOptions
 				disabled={concerns.length >= 3}
 				items={selectabledItems}
-				onSelect={(item) => handleToggleConcern(item.id as Concern)}
+				onSelect={(item) => handleToggleConcern(item.value as Concern)}
 			/>
 		</StepperPage>
 	);

@@ -26,6 +26,12 @@ export const getISOStringFromDate = (date: Date) => {
 	return date.toISOString();
 };
 
+export const getTimestampFromDate = (date: Date) => {
+	const copiedDate = new Date(date);
+	copiedDate.setHours(0, 0, 0, 0);
+	return copiedDate.getTime();
+};
+
 export const getISODateFromToday = () => {
 	return getPartialsOfDate(new Date()).date;
 };
