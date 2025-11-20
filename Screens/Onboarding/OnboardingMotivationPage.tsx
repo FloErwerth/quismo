@@ -24,9 +24,8 @@ export const OnboardingMotivationPage = () => {
 
 	const selectabledItems = Object.values(getMotivationOptions(t)).map(
 		(motivation) => ({
-			id: motivation.id,
+			value: motivation.id,
 			label: motivation.label,
-			isSelected: selectedMotivation === motivation.id,
 		}),
 	);
 
@@ -53,7 +52,7 @@ export const OnboardingMotivationPage = () => {
 			</SizableText>
 			<SelectableOptions
 				disabled={selectedMotivation !== undefined}
-				onSelect={(item) => handleToggleMotivation(item.id)}
+				onSelect={(item) => handleToggleMotivation(item.value)}
 				flexWrap="wrap"
 				items={selectabledItems}
 			/>

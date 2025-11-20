@@ -1,3 +1,5 @@
+import { useId } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
 	type DialogProps,
 	SizableText,
@@ -17,6 +19,7 @@ export const Dialog = ({
 	title?: string;
 	onAfterCloseAnimation?: () => void;
 }) => {
+	const id = useId();
 	const { width: screenWidth } = useWindowDimensions();
 	const handleOverlayPress = () => {
 		if (dismissOnOverlayPress) {
@@ -28,7 +31,7 @@ export const Dialog = ({
 		<TamaguiDialog modal={modal} {...props}>
 			<TamaguiDialog.Portal>
 				<TamaguiDialog.Overlay
-					key="overlay"
+					key={`overlay-${id}`}
 					opacity={0.8}
 					animateOnly={["transform", "opacity"]}
 					animation={[
@@ -44,9 +47,9 @@ export const Dialog = ({
 					onPress={handleOverlayPress}
 				/>
 				<TamaguiDialog.Content
+					key={`content-${id}`}
 					margin="$4"
 					borderRadius="$6"
-					key="content"
 					width={screenWidth - 32}
 					animateOnly={["transform", "opacity"]}
 					animation={[
@@ -65,12 +68,14 @@ export const Dialog = ({
 					}}
 					exitStyle={{ x: 0, opacity: 0, rotate: "-5deg", scale: 1.05 }}
 				>
-					{title && (
-						<View marginBottom="$2">
-							<SizableText size="$8">{title}</SizableText>
-						</View>
-					)}
-					{props.children}
+					<KeyboardAwareScrollView>
+						{title && (
+							<View marginBottom="$2">
+								<SizableText size="$8">{title}</SizableText>
+							</View>
+						)}
+						{props.children}
+					</KeyboardAwareScrollView>
 				</TamaguiDialog.Content>
 			</TamaguiDialog.Portal>
 		</TamaguiDialog>

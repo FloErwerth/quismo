@@ -17,7 +17,8 @@ import { Button } from "@/components/tamagui/Button";
 export type StepperPageProps = {
 	title?: string;
 	hideNextButton?: boolean;
-	onNext?: () => Promise<void>;
+	onNext?: () => void | Promise<void>;
+	onSkip?: () => void | Promise<void>;
 	onPrevious?: () => void;
 	nextButtonText?: string;
 	previousButtonText?: string;
@@ -34,6 +35,8 @@ export type StepperPageProps = {
 		arrowPosition?: "left" | "right";
 		text: string;
 	};
+	showSkipButton?: boolean;
+	skipButtonText?: string;
 } & PropsWithChildren;
 
 const WIDTH = Dimensions.get("window").width;
@@ -145,14 +148,18 @@ export const StepperPage = ({
 	nextButtonIsLoadingButton,
 	hidePreviousButton,
 	onNext,
+	onSkip,
 	onPrevious,
 	hideNextButton,
 	bubbleTextConfig,
+	showSkipButton,
+	skipButtonText,
 	...props
 }: StepperPageProps) => {
 	const { t } = useTranslation();
 	const defaultNextButtonText = t("common.next");
 	const defaultPreviousButtonText = t("common.previous");
+	const defaultSkipButtonText = t("common.skip");
 	const { nextStep, previousStep, direction } = useStepper();
 	const { top } = useSafeAreaInsets();
 
@@ -169,6 +176,15 @@ export const StepperPage = ({
 		try {
 			await onPrevious?.();
 			previousStep();
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleSkip = async () => {
+		try {
+			await onSkip?.();
+			nextStep();
 		} catch (error) {
 			console.error(error);
 		}
@@ -223,6 +239,15 @@ export const StepperPage = ({
 								disabled={nextButtonDisabled}
 							>
 								{nextButtonText ?? defaultNextButtonText}
+							</Button.Debounced>
+						)}
+						{showSkipButton && (
+							<Button.Debounced
+								variant="outlined"
+								size="$6"
+								onPress={handleSkip}
+							>
+								{skipButtonText ?? defaultSkipButtonText}
 							</Button.Debounced>
 						)}
 					</View>

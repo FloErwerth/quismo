@@ -1,4 +1,4 @@
-import { type BadgeInfo, Info } from "@tamagui/lucide-icons";
+import { type BadgeInfo, CheckCircle2, Info } from "@tamagui/lucide-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import type { ComponentProps, FC, PropsWithChildren } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -10,7 +10,8 @@ import Animated, {
 	withSpring,
 	withTiming,
 } from "react-native-reanimated";
-import { type CardProps, SizableText, useTheme, View, XStack } from "tamagui";
+import { scheduleOnRN } from "react-native-worklets";
+import { SizableText, useTheme, View, type ViewProps, XStack } from "tamagui";
 import { Card } from "@/components/tamagui/Card";
 
 type InfoCardProps = PropsWithChildren<{
@@ -89,9 +90,9 @@ type SelectableCardProps = PropsWithChildren<
 		selected: boolean;
 		title: string;
 		description?: string;
-		Icon: FC<ComponentProps<typeof BadgeInfo>>;
+		Icon?: FC<ComponentProps<typeof BadgeInfo>>;
 		onPress: () => void;
-	} & CardProps
+	} & Omit<ViewProps, "onPress">
 >;
 
 const springConfig = {
@@ -107,7 +108,7 @@ export const SelectableCard = ({
 	selected,
 	title,
 	description,
-	Icon,
+	Icon = CheckCircle2,
 	onPress,
 	...props
 }: SelectableCardProps) => {
@@ -148,10 +149,6 @@ export const SelectableCard = ({
 
 	const titleStyle = useAnimatedStyle(() => ({
 		left: titleLeft.value,
-	}));
-
-	const descriptionStyle = useAnimatedStyle(() => ({
-		maxHeight: descriptionHeight.value,
 	}));
 
 	const cardStyle = useAnimatedStyle(() => ({
@@ -195,35 +192,36 @@ export const SelectableCard = ({
 			distanceX.value = withSpring(0);
 			distanceY.value = withSpring(0);
 			cardScale.value = withSpring(1, springConfig);
+			scheduleOnRN(onPress);
 		});
 	return (
-		<GestureDetector gesture={pan}>
-			<Animated.View style={cardStyle}>
-				<Card
-					{...props}
-					gap="$2"
-					padding="$3"
-					borderWidth="$1"
-					borderColor={selected ? "$blue6Light" : "$blue2Light"}
-					backgroundColor={selected ? "$blue4Light" : "$blue2Light"}
-					onPress={onPress}
-					animation="quick"
-				>
-					<View>
-						<Animated.View style={iconStyle}>
-							{<Icon size={iconSize} />}
-						</Animated.View>
-						<Animated.View style={titleStyle}>
-							<SizableText alignSelf="flex-start" size="$6" flex={props.flex}>
-								{title}
-							</SizableText>
-						</Animated.View>
-					</View>
-					{description && (
-						<SizableText flex={props.flex}>{description}</SizableText>
-					)}
-				</Card>
-			</Animated.View>
-		</GestureDetector>
+		<View {...props}>
+			<GestureDetector gesture={pan}>
+				<Animated.View style={cardStyle}>
+					<Card
+						gap="$2"
+						padding="$3"
+						borderWidth="$1"
+						borderColor={selected ? "$blue6Light" : "$blue2Light"}
+						backgroundColor={selected ? "$blue4Light" : "$blue2Light"}
+						animation="quick"
+					>
+						<View>
+							<Animated.View style={iconStyle}>
+								{<Icon size={iconSize} />}
+							</Animated.View>
+							<Animated.View style={titleStyle}>
+								<SizableText alignSelf="flex-start" size="$6" flex={props.flex}>
+									{title}
+								</SizableText>
+							</Animated.View>
+						</View>
+						{description && (
+							<SizableText flex={props.flex}>{description}</SizableText>
+						)}
+					</Card>
+				</Animated.View>
+			</GestureDetector>
+		</View>
 	);
 };

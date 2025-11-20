@@ -1,26 +1,29 @@
 import { SizableText, View, type ViewProps } from "tamagui";
 import { Button } from "@/components/tamagui/Button";
 
-type SelectableOptionsProps<
-	T extends { id: string; label: string; isSelected: boolean }[],
+export type SelectableOptionsProps<
+	T extends { value: string; label: string }[],
 > = {
 	onSelect: (item: T[number]) => void;
 	items: T;
+	value?: T[number]["value"];
 } & ViewProps;
 
 const SelectableOptionsItem = <
-	T extends { id: string; label: string; isSelected: boolean }[],
+	T extends { value: string; label: string; isSelected?: boolean }[],
 >({
 	item,
 	onSelect,
 	disabled,
+	isSelected,
 }: {
 	item: T[number];
 	onSelect: (item: T[number]) => void;
 	disabled?: boolean;
+	isSelected?: boolean;
 }) => {
 	const backgroundColor = (() => {
-		if (item.isSelected) {
+		if (isSelected) {
 			return "$blue11Light";
 		}
 
@@ -28,7 +31,7 @@ const SelectableOptionsItem = <
 	})();
 
 	const color = (() => {
-		if (item.isSelected) {
+		if (isSelected) {
 			return "white";
 		}
 
@@ -39,7 +42,7 @@ const SelectableOptionsItem = <
 		<Button
 			size="$4"
 			borderRadius="$12"
-			disabled={disabled && !item.isSelected}
+			disabled={disabled && !isSelected}
 			backgroundColor={backgroundColor}
 			onPress={() => onSelect(item)}
 		>
@@ -51,11 +54,12 @@ const SelectableOptionsItem = <
 };
 
 export const SelectableOptions = <
-	T extends { id: string; label: string; isSelected: boolean }[],
+	T extends { value: string; label: string }[],
 >({
 	onSelect,
 	items,
 	disabled,
+	value,
 	...props
 }: SelectableOptionsProps<T>) => {
 	return (
@@ -68,7 +72,7 @@ export const SelectableOptions = <
 		>
 			{items.map((item) => (
 				<View
-					key={item.id}
+					key={item.value}
 					animation="bouncy"
 					enterStyle={{ scale: 0.8 - Math.random() * 0.2 }}
 					scale={1}
@@ -77,6 +81,7 @@ export const SelectableOptions = <
 						disabled={disabled}
 						item={item}
 						onSelect={onSelect}
+						isSelected={item.value === value}
 					/>
 				</View>
 			))}
